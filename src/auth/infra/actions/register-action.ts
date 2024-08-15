@@ -10,8 +10,8 @@ type RegisterActionState = {
 
 export async function registerAction(_: RegisterActionState, formData: FormData): Promise<RegisterActionState> {
   try {
-    const { email, password } = Object.fromEntries(formData) as { email: string, password: string }
-    await userCreator.execute({ email, password })
+    const { email, password, name } = Object.fromEntries(formData) as { email: string, password: string, name: string }
+    await userCreator.execute({ email, password, name })
     await signIn('credentials', formData)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {

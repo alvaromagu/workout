@@ -6,13 +6,15 @@ export class User implements BaseModel<User> {
     public readonly id: string,
     public readonly email: string,
     public readonly password: string,
+    public readonly name: string,
   ) { }
 
   toPrimitives(): Primitives<User> {
     return {
       id: this.id,
       email: this.email,
-      password: this.password
+      password: this.password,
+      name: this.name,
     }
   }
 }
