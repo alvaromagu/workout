@@ -1,8 +1,10 @@
+import '@/app/globals.css'
+
 import type { Metadata } from 'next'
 import { Onest } from 'next/font/google'
-import './globals.css'
-import { getLocale, getMessages } from 'next-intl/server'
-import { NextIntlClientProvider } from 'next-intl'
+import { getLocale } from 'next-intl/server'
+import { RootProviders } from '@/app/providers'
+import { cn } from '@/utils'
 
 const onest = Onest({ subsets: ['latin'] })
 
@@ -27,14 +29,13 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const locale = await getLocale()
-  const messages = await getMessages()
 
   return (
     <html lang={locale}>
-      <body className={onest.className}>
-        <NextIntlClientProvider messages={messages}>
+      <body className={cn(onest.className, 'max-w-2xl m-auto')}>
+        <RootProviders>
           {children}
-        </NextIntlClientProvider>
+        </RootProviders>
       </body>
     </html>
   )
