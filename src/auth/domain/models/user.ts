@@ -5,9 +5,8 @@ export class User implements BaseModel<User> {
   constructor(
     public readonly id: string,
     public readonly email: string,
-    public readonly password: string | undefined | null,
-    public readonly name: string,
-    public readonly provider: string | undefined | null
+    public readonly password: string,
+    public readonly name: string
   ) { }
 
   toPrimitives(): Primitives<User> {
@@ -15,8 +14,7 @@ export class User implements BaseModel<User> {
       id: this.id,
       email: this.email,
       password: this.password,
-      name: this.name,
-      provider: this.provider
+      name: this.name
     }
   }
 }

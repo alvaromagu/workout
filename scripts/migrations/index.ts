@@ -1,4 +1,4 @@
-import { up, down } from '../migrations/001_create_db'
+import { up, down } from '../migrations/002_credentials_provider'
 import { db } from '@/commons/infra/db/kysely-pg/db'
 
 const args = process.argv.slice(2)

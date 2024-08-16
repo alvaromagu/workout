@@ -1,10 +1,11 @@
-import { useTranslations } from 'next-intl'
+import { auth } from '@/auth'
 
-export default function Home() {
-  const t = useTranslations('home-page')
+export default async function Home() {
+  const session = await auth()
+
   return (
     <h1 className='text-xl'>
-      {t('hello-world')}
+      {JSON.stringify(session)}
     </h1>
   )
 }

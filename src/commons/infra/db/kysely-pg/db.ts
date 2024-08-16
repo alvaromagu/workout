@@ -4,7 +4,15 @@ import pg from 'pg'
 
 const { Pool } = pg
  
-type Database = NextAuthDatabase & {}
+type Database = NextAuthDatabase & {
+  CredentialUser: {
+    id: string
+    name: string
+    email: string
+    password: string
+  }
+}
+export type KyselyDatabase = typeof db
  
 export const db = new KyselyAuth<Database>({
   dialect: new PostgresDialect({

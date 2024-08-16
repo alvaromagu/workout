@@ -17,9 +17,7 @@ export const credentialsProvider = Credentials({
       }
       return res.json()
     })
-    console.log('Login success', user)
     if (user == null) {
-      console.log('User not found')
       return null
     }
     return user
