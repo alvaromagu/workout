@@ -8,7 +8,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "scrape": "node scripts/scrape.mjs"
+    "scrape": "node scripts/scrape.mjs",
+    "tsx": "tsx --env-file=.env.local"
   },
   "dependencies": {
     "@auth/kysely-adapter": "1.4.2",
@@ -37,6 +38,7 @@
     "eslint-plugin-react-hooks": "4.6.2",
     "postcss": "8.4.41",
     "tailwindcss": "3.4.10",
+    "tsx": "4.17.0",
     "typescript": "5.5.4",
     "typescript-eslint": "8.1.0"
   },

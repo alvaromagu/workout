@@ -1,6 +1,8 @@
 import { PostgresDialect } from 'kysely'
-import { Pool } from 'pg'
 import { KyselyAuth, Database as NextAuthDatabase } from '@auth/kysely-adapter'
+import pg from 'pg'
+
+const { Pool } = pg
  
 type Database = NextAuthDatabase & {}
  
