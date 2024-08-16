@@ -1,6 +1,7 @@
 'use client'
 
 import { signInAction } from '@/auth/infra/actions/sign-in-action'
+import { signIn } from 'next-auth/react'
 import Link from 'next/link'
 import { useEffect } from 'react'
 import { useFormState } from 'react-dom'
@@ -30,6 +31,16 @@ export default function SignInPage() {
       <input type='hidden' name='redirectTo' value='/' />
       <button className='bg-blue-950 hover:bg-blue-900 transition-colors p-2 mt-4'>
         Sign In
+      </button>
+      <div className='relative flex justify-center before:block before:w-full before:absolute before:h-px before:inset-y-1/2 before:bg-gray-700' >
+        <div className='dark:bg-zinc-950 z-10 px-2'>or</div>
+      </div>
+      <button onClick={() => {
+        signIn('google', {
+          callbackUrl: '/'
+        })
+      }} type='button' className='bg-blue-950 hover:bg-blue-900 transition-colors p-2'>
+        Sign in with Google
       </button>
       <Link href={'/register'}>
         Don&apos;t have an account? Register

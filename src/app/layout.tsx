@@ -32,7 +32,7 @@ export default async function RootLayout({
 
   return (
     <html lang={locale}>
-      <body className={cn(onest.className, 'max-w-2xl m-auto')}>
+      <body className={cn(onest.className, 'max-w-2xl m-auto dark:bg-zinc-950')}>
         <RootProviders>
           {children}
         </RootProviders>

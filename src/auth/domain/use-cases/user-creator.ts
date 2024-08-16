@@ -8,13 +8,15 @@ export class UserCreator {
   async execute({
     email,
     password,
-    name
+    name,
+    provider
   }: {
     email: string
-    password: string
-    name: string
+    password?: string
+    name: string,
+    provider?: string
   }): Promise<User> {
-    const user = new User(crypto.randomUUID(), email, password, name)
+    const user = new User(crypto.randomUUID(), email, password, name, provider)
     if (await this.userRepository.findByEmail(user.email) != null) {
       throw new EmailAlreadyInUse()
     }
