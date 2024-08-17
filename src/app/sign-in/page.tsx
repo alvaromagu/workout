@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { useEffect } from 'react'
 import { useFormState } from 'react-dom'
 
-export default function SignInPage() {
+export default function SignInPage () {
   const [state, fromAction] = useFormState(signInAction, undefined)
 
   useEffect(() => {
@@ -38,8 +38,8 @@ export default function SignInPage() {
       <div className='relative flex justify-center before:block before:w-full before:absolute before:h-px before:inset-y-1/2 before:bg-gray-700' >
         <div className='dark:bg-zinc-950 z-10 px-2'>or</div>
       </div>
-      <button onClick={() => {
-        signIn('google', {
+      <button onClick={async () => {
+        await signIn('google', {
           callbackUrl: '/'
         })
       }} type='button' className='bg-blue-950 hover:bg-blue-900 transition-colors p-2'>
@@ -48,4 +48,3 @@ export default function SignInPage() {
     </form>
   )
 }
-

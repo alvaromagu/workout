@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useEffect } from 'react'
 import { useFormState } from 'react-dom'
 
-export default function RegisterPage() {
+export default function RegisterPage () {
   const [state, fromAction] = useFormState(registerAction, undefined)
 
   useEffect(() => {

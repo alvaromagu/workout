@@ -1,9 +1,9 @@
 import { User } from '@/auth/domain/models/user'
-import { UserRepository } from '@/auth/domain/repositories/user-repository'
+import { type UserRepository } from '@/auth/domain/repositories/user-repository'
 import { Repository } from '@/commons/infra/db/kysely-pg/repository'
 
 export class KyselyUserRepository extends Repository implements UserRepository {
-  async findByEmail(email: string): Promise<User | null> {
+  async findByEmail (email: string): Promise<User | null> {
     const row = await this.db
       .selectFrom('CredentialUser')
       .selectAll()
@@ -21,7 +21,7 @@ export class KyselyUserRepository extends Repository implements UserRepository {
     )
   }
 
-  async save(user: User): Promise<void> {
+  async save (user: User): Promise<void> {
     await this.db
       .insertInto('CredentialUser')
       .values(user.toPrimitives())

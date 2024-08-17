@@ -1,11 +1,11 @@
 import { authThr } from '@/auth/infra/actions/auth-thr'
 import { ClientSignOut } from '@/auth/infra/components/client-sign-out'
-import { Session } from 'next-auth'
+import { type Session } from 'next-auth'
 
-export default async function RequiresAuthLayout({
-  children,
+export default async function RequiresAuthLayout ({
+  children
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   const session = await authThr()
 

@@ -1,5 +1,5 @@
 export class EmailAlreadyInUse extends Error {
-  constructor() {
+  constructor () {
     super('Email already in use')
   }
 }

@@ -7,7 +7,7 @@ type SignInActionState = {
   message: string
 } | undefined
 
-export async function signInAction(_: SignInActionState, formData: FormData): Promise<SignInActionState> {
+export async function signInAction (_: SignInActionState, formData: FormData): Promise<SignInActionState> {
   try {
     await signIn('credentials', formData)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

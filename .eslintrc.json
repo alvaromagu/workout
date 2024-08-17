@@ -1,0 +1,15 @@
+{
+  "extends": [
+    "next/core-web-vitals",
+    "love"
+  ],
+  "rules": {
+    "@typescript-eslint/explicit-function-return-type": 0,
+    "@typescript-eslint/no-misused-promises": 0,
+    "jsx-quotes": [
+      "error",
+      "prefer-single"
+    ],
+    "@next/next/no-img-element": 0
+  }
+}

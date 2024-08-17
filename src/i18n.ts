@@ -6,7 +6,7 @@ const defaultLocale: Locale = 'en'
 const locales = new Set<Locale>(['en', 'es'])
 
 const regex = /((([a-zA-Z]+(-[a-zA-Z0-9]+){0,2})|\*)(;q=[0-1](\.[0-9]+)?)?)*/g
-function getReqLocale(): Locale {
+function getReqLocale (): Locale {
   const acceptLang = headers().get('accept-language')
   const matches = acceptLang?.match(regex) ?? []
   let firstValid: Locale | undefined

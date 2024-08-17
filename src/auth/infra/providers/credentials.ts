@@ -10,12 +10,12 @@ export const credentialsProvider = Credentials({
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(credentials)
-    }).then(res => {
+    }).then(async res => {
       if (!res.ok) {
         console.log('Failed to login', res.statusText)
         throw new Error(res.statusText)
       }
-      return res.json()
+      return await res.json()
     })
     if (user == null) {
       return null

@@ -8,7 +8,7 @@ type RegisterActionState = {
   message: string
 } | undefined
 
-export async function registerAction(_: RegisterActionState, formData: FormData): Promise<RegisterActionState> {
+export async function registerAction (_: RegisterActionState, formData: FormData): Promise<RegisterActionState> {
   try {
     const { email, password, name } = Object.fromEntries(formData) as { email: string, password: string, name: string }
     await userCreator.execute({ email, password, name })

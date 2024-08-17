@@ -1,10 +1,10 @@
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages } from 'next-intl/server'
 
-export async function RootProviders({
-  children,
+export async function RootProviders ({
+  children
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   const messages = await getMessages()
 

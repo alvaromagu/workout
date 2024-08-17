@@ -1,6 +1,6 @@
 import NextAuth from 'next-auth'
 import { kysely } from '@/server-container'
-import { Database, KyselyAdapter, KyselyAuth } from '@auth/kysely-adapter'
+import { type Database, KyselyAdapter, type KyselyAuth } from '@auth/kysely-adapter'
 import { authConfig } from './auth-config'
 
 export const { handlers, auth, signIn, signOut } = NextAuth({

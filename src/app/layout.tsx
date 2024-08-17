@@ -14,19 +14,19 @@ export const metadata: Metadata = {
   icons: [
     {
       media: '(prefers-color-scheme: dark)',
-      url: '/favdark.svg',
+      url: '/favdark.svg'
     },
     {
       media: '(prefers-color-scheme: light)',
-      url: '/favlight.svg',
-    },
+      url: '/favlight.svg'
+    }
   ]
 }
 
-export default async function RootLayout({
-  children,
+export default async function RootLayout ({
+  children
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   const locale = await getLocale()
 
