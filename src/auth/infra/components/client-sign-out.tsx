@@ -1,19 +1,28 @@
+'use client'
+
 import { IconDoorExit } from '@tabler/icons-react'
-import { signOut } from '@/auth'
-import { TextSubmitButton } from '@/commons/infra/components/client-button'
+import { TextPendingButton } from '@/commons/infra/components/client-button'
+import { useState } from 'react'
+import { signOut } from 'next-auth/react'
 
 export function ClientSignOut () {
+  const [pending, setPending] = useState(false)
+
   return (
-    <form action={async () => {
-      'use server'
+    <form onClick={async (e) => {
+      e.preventDefault()
+      setPending(true)
       await signOut()
+        .finally(() => {
+          setPending(false)
+        })
     }}>
-      <TextSubmitButton type='submit'>
+      <TextPendingButton pending={pending} type='submit'>
         <IconDoorExit size={24} />
         <span>
           Cerrar sesión
         </span>
-      </TextSubmitButton>
+      </TextPendingButton>
     </form>
   )
 }

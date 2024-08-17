@@ -1,4 +1,4 @@
-import { cn, withProps } from '@/utils'
+import { cn } from '@/utils'
 import { forwardRef, type InputHTMLAttributes } from 'react'
 
 export type InputProps = InputHTMLAttributes<HTMLInputElement>
@@ -18,12 +18,4 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       />
     )
   }
-)
-
-export const SumbitInput = withProps(
-  Input,
-  props => ({
-    type: 'submit',
-    ...props
-  })
 )

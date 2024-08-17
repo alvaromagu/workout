@@ -11,29 +11,40 @@ export const TextSubmitButton = withFormStatus(
   withProps(
     TextButton,
     ({ status, disabled, className, ...props }: ComponentProps<typeof TextButton> & { status: FormStatus }) => {
-      return {
-        ...props,
-        disabled: disabled ?? status.pending,
-        className: cn(
-          status.pending && 'disabled pointer-events-none dark:text-gray-400',
-          className
-        ),
-        children: <BuildChildren status={status}>{props.children}</BuildChildren>
-      }
+      return getPendingProps({ pending: status.pending, disabled, className, ...props })
     }
   )
 )
 
+export const TextPendingButton = withProps(
+  TextButton,
+  ({ pending, disabled, className, ...props }: ComponentProps<typeof TextButton> & { pending: boolean }) => {
+    return getPendingProps({ pending, disabled, className, ...props })
+  }
+)
+
+function getPendingProps ({ pending, disabled, className, ...props }: ComponentProps<typeof TextButton> & { pending: boolean }) {
+  return {
+    ...props,
+    disabled: disabled ?? pending,
+    className: cn(
+      pending && 'disabled pointer-events-none dark:text-gray-400',
+      className
+    ),
+    children: <BuildChildren pending={pending}>{props.children}</BuildChildren>
+  }
+}
+
 function BuildChildren ({
-  status,
+  pending,
   children
 }: {
-  status: FormStatus
+  pending: boolean
   children: ReactNode
 }) {
   return (
     <>
-      {status.pending && <Spinner />}
+      {pending && <Spinner />}
       {children}
     </>
   )
