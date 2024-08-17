@@ -25,8 +25,13 @@ function Header ({
   session: Session
 }) {
   return (
-    <header className='flex items-center p-2'>
-      <p className='text-xl'>Welcome {session.user?.name}</p>
+    <header className='flex items-center sticky top-0 gap-2 p-2 bg-zinc-900'>
+      <img
+        src={session.user?.image ?? 'https://avatar.iran.liara.run/public'}
+        alt={session.user?.name ?? 'random avatar'}
+        className='size-8 rounded-full object-cover'
+      />
+      <p className='text-xl'>{session.user?.name}</p>
       <div className='flex justify-end items-center flex-1'>
         <ClientSignOut />
       </div>
