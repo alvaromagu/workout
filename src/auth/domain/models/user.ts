@@ -9,7 +9,11 @@ export class User implements BaseModel<User> {
     public readonly password: string | null | undefined,
     public readonly emailVerified: Date | null,
     public readonly image: string | null | undefined
-  ) {}
+  ) {
+    // dont validate the model becose this model is shared with next-auth lib.
+    // it only will be validated in the user-creator use case that's used for 
+    // credentials register.
+  }
 
   toPrimitives (): Primitives<User> {
     return {

@@ -1,4 +1,5 @@
 import Credentials from 'next-auth/providers/credentials'
+import { InvalidCredentials } from '../exceptions/invalid-credentials'
 
 export const credentialsProvider = Credentials({
   credentials: {
@@ -12,14 +13,13 @@ export const credentialsProvider = Credentials({
       body: JSON.stringify(credentials)
     }).then(async res => {
       if (!res.ok) {
-        console.log('Failed to login', res.statusText)
-        throw new Error(res.statusText)
+        if (res.status === 401) {
+          throw new InvalidCredentials()
+        }
+        throw new Error('Failed to login')
       }
       return await res.json()
     })
-    if (user == null) {
-      return null
-    }
     return user
   }
 })

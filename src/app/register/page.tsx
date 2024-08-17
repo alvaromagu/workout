@@ -7,13 +7,14 @@ import { Label } from '@/commons/infra/components/label'
 import Link from 'next/link'
 import { useEffect } from 'react'
 import { useFormState } from 'react-dom'
+import toast from 'react-hot-toast'
 
 export default function RegisterPage () {
   const [state, fromAction] = useFormState(registerAction, undefined)
 
   useEffect(() => {
     if (state == null) return
-    alert(state.message)
+    toast.error(state.message)
   }, [state])
 
   return (
@@ -38,6 +39,7 @@ export default function RegisterPage () {
           <Input
             name='password'
             type='password'
+            minLength={8}
             required
           />
         </Label>
@@ -46,6 +48,7 @@ export default function RegisterPage () {
           <Input
             name='name'
             type='text'
+            minLength={2}
             required
           />
         </Label>
