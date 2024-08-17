@@ -5,11 +5,8 @@ import pg from 'pg'
 const { Pool } = pg
 
 type Database = NextAuthDatabase & {
-  CredentialUser: {
-    id: string
-    name: string
-    email: string
-    password: string
+  User: NextAuthDatabase['User'] & {
+    password?: string | null
   }
 }
 export type KyselyDatabase = typeof db

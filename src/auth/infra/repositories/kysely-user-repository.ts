@@ -5,7 +5,7 @@ import { Repository } from '@/commons/infra/db/kysely-pg/repository'
 export class KyselyUserRepository extends Repository implements UserRepository {
   async findByEmail (email: string): Promise<User | null> {
     const row = await this.db
-      .selectFrom('CredentialUser')
+      .selectFrom('User')
       .selectAll()
       .where('email', '=', email)
       .limit(1)
@@ -16,14 +16,16 @@ export class KyselyUserRepository extends Repository implements UserRepository {
     return new User(
       row.id,
       row.email,
+      row.name,
       row.password,
-      row.name
+      row.emailVerified,
+      row.image
     )
   }
 
   async save (user: User): Promise<void> {
     await this.db
-      .insertInto('CredentialUser')
+      .insertInto('User')
       .values(user.toPrimitives())
       .execute()
   }
