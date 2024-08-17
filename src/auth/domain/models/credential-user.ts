@@ -1,7 +1,7 @@
 import { type BaseModel } from '@/commons/domain/models/base-model'
 import { type Primitives } from '@/commons/domain/types/to-primitives'
 
-export class User implements BaseModel<User> {
+export class CredentialUser implements BaseModel<CredentialUser> {
   constructor (
     public readonly id: string,
     public readonly email: string,
@@ -9,7 +9,7 @@ export class User implements BaseModel<User> {
     public readonly name: string
   ) { }
 
-  toPrimitives (): Primitives<User> {
+  toPrimitives (): Primitives<CredentialUser> {
     return {
       id: this.id,
       email: this.email,

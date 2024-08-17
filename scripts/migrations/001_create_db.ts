@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Kysely, sql } from 'kysely'
+import { type Kysely, sql } from 'kysely'
 
-export async function up(db: Kysely<any>): Promise<void> {
+export async function up (db: Kysely<any>): Promise<void> {
   await db.schema
     .createTable('User')
     .addColumn('id', 'uuid', (col) =>
@@ -65,7 +65,7 @@ export async function up(db: Kysely<any>): Promise<void> {
     .execute()
 }
 
-export async function down(db: Kysely<any>): Promise<void> {
+export async function down (db: Kysely<any>): Promise<void> {
   await db.schema.dropTable('Account').ifExists().execute()
   await db.schema.dropTable('Session').ifExists().execute()
   await db.schema.dropTable('User').ifExists().execute()

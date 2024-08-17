@@ -6,7 +6,7 @@ export const credentialsProvider = Credentials({
     password: {}
   },
   authorize: async (credentials) => {
-    const user = await fetch('http://localhost:3000/api/credentials/login', {
+    const credentialUser = await fetch('http://localhost:3000/api/credentials/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(credentials)
@@ -17,9 +17,9 @@ export const credentialsProvider = Credentials({
       }
       return await res.json()
     })
-    if (user == null) {
+    if (credentialUser == null) {
       return null
     }
-    return user
+    return credentialUser
   }
 })
