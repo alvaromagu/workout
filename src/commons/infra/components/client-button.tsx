@@ -1,3 +1,5 @@
+'use client'
+
 import { withFormStatus } from '@/client-utils'
 import { TextButton } from './button'
 import { cn, withProps } from '@/utils'

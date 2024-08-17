@@ -1,18 +1,19 @@
-'use client'
-
-import { TextButton } from '@/commons/infra/components/button'
 import { IconDoorExit } from '@tabler/icons-react'
-import { signOut } from 'next-auth/react'
+import { signOut } from '@/auth'
+import { TextSubmitButton } from '@/commons/infra/components/client-button'
 
 export function ClientSignOut () {
   return (
-    <TextButton onClick={async () => {
+    <form action={async () => {
+      'use server'
       await signOut()
     }}>
-      <IconDoorExit size={24} />
-      <span>
-        Cerrar sesión
-      </span>
-    </TextButton>
+      <TextSubmitButton type='submit'>
+        <IconDoorExit size={24} />
+        <span>
+          Cerrar sesión
+        </span>
+      </TextSubmitButton>
+    </form>
   )
 }
