@@ -32,6 +32,9 @@ export default function SignInPage() {
       <button className='bg-blue-950 hover:bg-blue-900 transition-colors p-2 mt-4'>
         Sign In
       </button>
+      <Link href={'/register'} className='underline'>
+        Don&apos;t have an account? Register
+      </Link>
       <div className='relative flex justify-center before:block before:w-full before:absolute before:h-px before:inset-y-1/2 before:bg-gray-700' >
         <div className='dark:bg-zinc-950 z-10 px-2'>or</div>
       </div>
@@ -42,9 +45,6 @@ export default function SignInPage() {
       }} type='button' className='bg-blue-950 hover:bg-blue-900 transition-colors p-2'>
         Sign in with Google
       </button>
-      <Link href={'/register'}>
-        Don&apos;t have an account? Register
-      </Link>
     </form>
   )
 }

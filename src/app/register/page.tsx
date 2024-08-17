@@ -35,7 +35,7 @@ export default function RegisterPage() {
       <button className='bg-blue-950 hover:bg-blue-900 transition-colors p-2 mt-4'>
         Register
       </button>
-      <Link href={'/sign-in'}>
+      <Link href={'/sign-in'} className='underline'>
         Already have an account? Login
       </Link>
     </form>
