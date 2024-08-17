@@ -1,9 +1,13 @@
 import { EmailAlreadyInUse } from '@/auth/domain/exceptions/email-already-in-use'
 import { User } from '@/auth/domain/models/user'
 import { type UserRepository } from '@/auth/domain/repositories/user-repository'
+import { type Crypter } from '@/commons/domain/types/crypter'
 
 export class UserCreator {
-  constructor (private readonly userRepository: UserRepository) { }
+  constructor (
+    private readonly userRepository: UserRepository,
+    private readonly crypter: Crypter
+  ) { }
 
   async execute ({
     email,
@@ -18,7 +22,7 @@ export class UserCreator {
       crypto.randomUUID(),
       email,
       name,
-      password,
+      await this.crypter.hash(password),
       null,
       null
     )
