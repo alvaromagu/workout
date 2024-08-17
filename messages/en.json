@@ -1,5 +1,21 @@
 {
   "home-page": {
-    "hello-world": "Hello, World!" 
+    "hello-world": "Hello, World!",
+    "sign-out": "Sign out"
+  },
+  "sign-in": {
+    "sign-in": "Sign in",
+    "sign-in-with": "Sign in with",
+    "or": "or",
+    "email": "Email",
+    "password": "Password",
+    "dont-have-account": "Don't have an account? Register"
+  },
+  "register": {
+    "register": "Register",
+    "email": "Email",
+    "password": "Password",
+    "name": "Name",
+    "already-have-account": "Already have an account? Sign in"
   }
 }

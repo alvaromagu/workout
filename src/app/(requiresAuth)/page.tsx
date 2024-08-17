@@ -4,8 +4,10 @@ export default function Home () {
   const t = useTranslations()
 
   return (
-    <h1 className='text-xl'>
-      {t('home-page.hello-world')}
-    </h1>
+    <div className='p-2'>
+      <h1 className='text-xl'>
+        {t('home-page.hello-world')}
+      </h1>
+    </div>
   )
 }

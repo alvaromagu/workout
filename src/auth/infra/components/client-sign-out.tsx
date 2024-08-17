@@ -4,8 +4,10 @@ import { IconDoorExit } from '@tabler/icons-react'
 import { TextPendingButton } from '@/commons/infra/components/client-button'
 import { useState } from 'react'
 import { signOut } from 'next-auth/react'
+import { useTranslations } from 'next-intl'
 
 export function ClientSignOut () {
+  const t = useTranslations()
   const [pending, setPending] = useState(false)
 
   return (
@@ -20,7 +22,7 @@ export function ClientSignOut () {
       <TextPendingButton pending={pending} type='submit'>
         <IconDoorExit size={24} />
         <span>
-          Cerrar sesión
+          {t('home-page.sign-out')}
         </span>
       </TextPendingButton>
     </form>
