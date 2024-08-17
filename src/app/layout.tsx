@@ -34,7 +34,9 @@ export default async function RootLayout({
     <html lang={locale}>
       <body className={cn(onest.className, 'max-w-2xl m-auto dark:bg-zinc-950')}>
         <RootProviders>
-          {children}
+          <main>
+            {children}
+          </main>
         </RootProviders>
       </body>
     </html>
