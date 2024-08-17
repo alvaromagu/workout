@@ -25,7 +25,7 @@ function Header ({
   session: Session
 }) {
   return (
-    <header className='flex items-center sticky top-0 gap-2 p-2 dark:bg-zinc-900'>
+    <header className='flex items-center sticky top-0 gap-2 p-2 dark:bg-zinc-900 z-50'>
       <img
         src={session.user?.image ?? 'https://avatar.iran.liara.run/public'}
         alt={session.user?.name ?? 'random avatar'}
