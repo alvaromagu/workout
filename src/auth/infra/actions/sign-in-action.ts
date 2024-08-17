@@ -1,6 +1,7 @@
 'use server'
 
 import { signIn } from '@/auth'
+import { InvalidCredentials } from '../exceptions/invalid-credentials'
 
 type SignInActionState = {
   type: 'error'
@@ -14,6 +15,12 @@ export async function signInAction (_: SignInActionState, formData: FormData): P
   } catch (error: any) {
     if ('message' in error && error.message === 'NEXT_REDIRECT') {
       throw error
+    }
+    if (error instanceof InvalidCredentials) {
+      return {
+        type: 'error',
+        message: 'Invalid credentials'
+      }
     }
     return {
       type: 'error',

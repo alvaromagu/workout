@@ -1,8 +1,8 @@
 import { clsx, type ClassValue } from 'clsx'
-import React, {
+import {
   forwardRef,
-  type FunctionComponent,
   type ForwardRefExoticComponent,
+  type FunctionComponent,
   type RefAttributes
 } from 'react'
 import { twMerge } from 'tailwind-merge'

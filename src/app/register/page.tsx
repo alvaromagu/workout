@@ -1,19 +1,20 @@
 'use client'
 
 import { registerAction } from '@/auth/infra/actions/register-action'
-import { LabelButton } from '@/commons/infra/components/button'
+import { TextSubmitButton } from '@/commons/infra/components/client-button'
 import { Input } from '@/commons/infra/components/input'
 import { Label } from '@/commons/infra/components/label'
 import Link from 'next/link'
 import { useEffect } from 'react'
 import { useFormState } from 'react-dom'
+import toast from 'react-hot-toast'
 
 export default function RegisterPage () {
   const [state, fromAction] = useFormState(registerAction, undefined)
 
   useEffect(() => {
     if (state == null) return
-    alert(state.message)
+    toast.error(state.message)
   }, [state])
 
   return (
@@ -38,6 +39,7 @@ export default function RegisterPage () {
           <Input
             name='password'
             type='password'
+            minLength={8}
             required
           />
         </Label>
@@ -46,13 +48,14 @@ export default function RegisterPage () {
           <Input
             name='name'
             type='text'
+            minLength={2}
             required
           />
         </Label>
         <Input type='hidden' name='redirectTo' value='/' />
-        <LabelButton className='mt-2'>
+        <TextSubmitButton className='mt-2'>
           Register
-        </LabelButton>
+        </TextSubmitButton>
         <Link href={'/sign-in'} className='underline w-fit'>
           Already have an account? Login
         </Link>

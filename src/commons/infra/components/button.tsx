@@ -5,7 +5,6 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement>
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   function Button (props, ref) {
-    console.log(props.className)
     return (
       <button
         ref={ref}
@@ -21,7 +20,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   }
 )
 
-export const LabelButton = withProps(
+export const TextButton = withProps(
   Button,
   props => ({ ...props, className: cn('flex items-center justify-center gap-2 p-2', props.className) })
 )
