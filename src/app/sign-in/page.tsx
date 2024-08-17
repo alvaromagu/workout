@@ -1,7 +1,7 @@
 'use client'
 
 import { signInAction } from '@/auth/infra/actions/sign-in-action'
-import { LabelButton } from '@/commons/infra/components/button'
+import { TextSubmitButton } from '@/commons/infra/components/client-button'
 import { Input } from '@/commons/infra/components/input'
 import { Label } from '@/commons/infra/components/label'
 import { IconBrandGoogleFilled } from '@tabler/icons-react'
@@ -32,6 +32,7 @@ export default function SignInPage () {
           <Input
             name='email'
             type='email'
+            placeholder='Email...'
             required
           />
         </Label>
@@ -40,27 +41,31 @@ export default function SignInPage () {
           <Input
             name='password'
             type='password'
+            placeholder='Password...'
             required
           />
         </Label>
         <Input type='hidden' name='redirectTo' value='/' />
-        <LabelButton className='mt-4'>
+        <TextSubmitButton className='mt-4'>
           Sign In
-        </LabelButton>
+        </TextSubmitButton>
         <Link href={'/register'} className='underline w-fit'>
           Don&apos;t have an account? Register
         </Link>
         <div className='relative flex justify-center before:block before:w-full before:absolute before:h-px before:inset-y-1/2 dark:before:bg-gray-700' >
           <div className='dark:bg-zinc-950 z-10 px-2'>or</div>
         </div>
-        <LabelButton className='hover:dark:bg-blue-800 duration-300' onClick={async () => {
-          await signIn('google', {
-            callbackUrl: '/'
-          })
-        }} type='button'>
+        <TextSubmitButton
+          className='hover:dark:bg-blue-800 duration-300'
+          onClick={async () => {
+            await signIn('google', {
+              callbackUrl: '/'
+            })
+          }} type='button'
+        >
           <span>Sign in with</span>
           <IconBrandGoogleFilled className='text-red-400' />
-        </LabelButton>
+        </TextSubmitButton>
       </form>
     </>
   )

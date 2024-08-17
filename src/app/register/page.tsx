@@ -1,7 +1,7 @@
 'use client'
 
 import { registerAction } from '@/auth/infra/actions/register-action'
-import { LabelButton } from '@/commons/infra/components/button'
+import { TextSubmitButton } from '@/commons/infra/components/client-button'
 import { Input } from '@/commons/infra/components/input'
 import { Label } from '@/commons/infra/components/label'
 import Link from 'next/link'
@@ -50,9 +50,9 @@ export default function RegisterPage () {
           />
         </Label>
         <Input type='hidden' name='redirectTo' value='/' />
-        <LabelButton className='mt-2'>
+        <TextSubmitButton className='mt-2'>
           Register
-        </LabelButton>
+        </TextSubmitButton>
         <Link href={'/sign-in'} className='underline w-fit'>
           Already have an account? Login
         </Link>
