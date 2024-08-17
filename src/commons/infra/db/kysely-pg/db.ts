@@ -8,12 +8,6 @@ type Database = NextAuthDatabase & {
   User: NextAuthDatabase['User'] & {
     password?: string | null
   }
-  CredentialUser: {
-    id: string
-    name: string
-    email: string
-    password: string
-  }
 }
 export type KyselyDatabase = typeof db
 

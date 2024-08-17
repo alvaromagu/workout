@@ -1,10 +1,9 @@
-import { up, down } from '../migrations/002_credentials_provider'
+import { up, down } from '../migrations/003_credentials_table_remove'
 import { db } from '@/commons/infra/db/kysely-pg/db'
 
 const args = process.argv.slice(2)
 
 console.log(args)
-
 
 if (args.includes('--up')) {
   // Run the up migration
