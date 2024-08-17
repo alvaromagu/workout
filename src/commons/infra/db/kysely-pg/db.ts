@@ -5,6 +5,9 @@ import pg from 'pg'
 const { Pool } = pg
 
 type Database = NextAuthDatabase & {
+  User: NextAuthDatabase['User'] & {
+    password?: string | null
+  }
   CredentialUser: {
     id: string
     name: string

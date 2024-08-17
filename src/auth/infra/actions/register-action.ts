@@ -1,6 +1,6 @@
 'use server'
 
-import { credentialUserCreator } from '@/server-container'
+import { userCreator } from '@/server-container'
 import { signIn } from '@/auth'
 
 type RegisterActionState = {
@@ -11,7 +11,7 @@ type RegisterActionState = {
 export async function registerAction (_: RegisterActionState, formData: FormData): Promise<RegisterActionState> {
   try {
     const { email, password, name } = Object.fromEntries(formData) as { email: string, password: string, name: string }
-    await credentialUserCreator.execute({ email, password, name })
+    await userCreator.execute({ email, password, name })
     await signIn('credentials', formData)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
