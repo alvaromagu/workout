@@ -8,7 +8,15 @@ type Database = NextAuthDatabase & {
   User: NextAuthDatabase['User'] & {
     password?: string | null
   }
+  exercise: {
+    id: string
+    name: string
+    description: string | null
+    muscles: string | null
+    image: string | null
+  }
 }
+
 export type KyselyDatabase = typeof db
 
 export const db = new KyselyAuth<Database>({
