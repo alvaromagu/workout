@@ -2,6 +2,7 @@
 
 import { Exercise } from '@/exercise/domain/types/exercise'
 import { exerciseRepo } from '@/server-container'
+import { revalidateTag } from 'next/cache'
 
 type CreateExerciseActionState = {
   type: 'error'
@@ -27,6 +28,7 @@ export async function createExerciseAction (_: CreateExerciseActionState, formDa
       return { type: 'error', message: err.message }
     }
   }
+  revalidateTag('/exercises')
   return {
     type: 'success'
   }
