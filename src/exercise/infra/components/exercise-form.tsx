@@ -15,11 +15,12 @@ import { updateExerciseAction } from '../actions/update-exercise-action'
 export function ExerciseForm ({
   exercise
 }: {
-  exercise?: Primitives<Exercise>
+  exercise?: Partial<Primitives<Exercise>>
 }) {
-  const isEdit = exercise != null
+  const id = exercise?.id
+  const isEdit = id != null
   const [state, action] = useFormState(
-    exercise != null ? updateExerciseAction.bind(null, exercise.id) : createExerciseAction,
+    isEdit ? updateExerciseAction.bind(null, id) : createExerciseAction,
     undefined
   )
 

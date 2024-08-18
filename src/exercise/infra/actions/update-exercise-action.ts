@@ -6,9 +6,6 @@ import { revalidateTag } from 'next/cache'
 import { type UpdateCreateExerciseActionState } from '../types/update-create-action-state'
 
 export async function updateExerciseAction (id: string, _: UpdateCreateExerciseActionState, formData: FormData): Promise<UpdateCreateExerciseActionState> {
-  console.log('updateExerciseAction', {
-    id
-  })
   const formObj = Object.fromEntries(formData)
   const exercise = new Exercise(
     id,

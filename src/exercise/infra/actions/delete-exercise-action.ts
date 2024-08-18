@@ -10,8 +10,6 @@ export type DeleteExerciseActionState = {
 } | undefined
 
 export async function deleteExerciseAction (id: string, _: DeleteExerciseActionState, __: FormData): Promise<DeleteExerciseActionState> {
-  console.log('deleteExerciseAction', id)
-
   try {
     await exerciseRepo.delete(id)
   } catch (err) {
