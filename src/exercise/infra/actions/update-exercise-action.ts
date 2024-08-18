@@ -5,17 +5,20 @@ import { exerciseRepo } from '@/server-container'
 import { revalidateTag } from 'next/cache'
 import { type UpdateCreateExerciseActionState } from '../types/update-create-action-state'
 
-export async function createExerciseAction (_: UpdateCreateExerciseActionState, formData: FormData): Promise<UpdateCreateExerciseActionState> {
+export async function updateExerciseAction (id: string, _: UpdateCreateExerciseActionState, formData: FormData): Promise<UpdateCreateExerciseActionState> {
+  console.log('updateExerciseAction', {
+    id
+  })
   const formObj = Object.fromEntries(formData)
   const exercise = new Exercise(
-    crypto.randomUUID(),
+    id,
     formObj.name as string,
     formObj.description as string,
     formObj.muscles as string,
     formObj.image as string
   )
   try {
-    await exerciseRepo.create(exercise)
+    await exerciseRepo.update(exercise)
   } catch (err) {
     if (err instanceof Error) {
       if (err.message === 'NEXT_REDIRECT') { throw err }
