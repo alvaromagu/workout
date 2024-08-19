@@ -11,7 +11,7 @@ export class User implements BaseModel<User> {
     public readonly image: string | null | undefined
   ) {
     // dont validate the model becose this model is shared with next-auth lib.
-    // it only will be validated in the user-creator use case that's used for 
+    // it only will be validated in the user-creator use case that's used for
     // credentials register.
   }
 
