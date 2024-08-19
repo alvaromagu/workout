@@ -1,6 +1,7 @@
 import { PostgresDialect } from 'kysely'
 import { KyselyAuth, type Database as NextAuthDatabase } from '@auth/kysely-adapter'
 import pg from 'pg'
+import { env } from '@/server-env'
 
 const { Pool } = pg
 
@@ -25,7 +26,8 @@ export const db = new KyselyAuth<Database>({
       host: process.env.DATABASE_HOST,
       database: process.env.DATABASE_NAME,
       user: process.env.DATABASE_USER,
-      password: process.env.DATABASE_PASSWORD
+      password: process.env.DATABASE_PASSWORD,
+      ssl: env.dbSsl
     })
   })
 })
