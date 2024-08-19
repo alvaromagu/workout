@@ -13,7 +13,6 @@ export async function googleSignInAction (_: SignInActionState, formData: FormDa
       redirectTo: '/'
     })
   } catch (err) {
-    console.log('sign in error', err)
     if (err instanceof Error && err.message === 'NEXT_REDIRECT') {
       throw err
     }

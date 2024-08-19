@@ -1,17 +1,44 @@
 'use client'
 
 import { withFormStatus } from '@/client-utils'
-import { TextButton } from './button'
+import { IconButton, TextButton } from './button'
 import { cn, withProps } from '@/utils'
 import { type FormStatus } from 'react-dom'
 import { type ComponentProps, type ReactNode } from 'react'
 import { Spinner } from './spinner'
 
+export const IconSubmitButton = withFormStatus(
+  withProps(
+    IconButton,
+    ({ status, disabled, className, spinnerClassName, ...props }: ComponentProps<typeof IconButton> & { status: FormStatus } & { spinnerClassName?: string }) => {
+      return getIconPendingProps({ pending: status.pending, disabled, className, spinnerClassName, ...props })
+    }
+  )
+)
+
+export function getIconPendingProps ({ pending, disabled, className, spinnerClassName, ...props }: ComponentProps<typeof IconButton> & { pending: boolean, spinnerClassName?: string }) {
+  return {
+    ...props,
+    disabled: disabled ?? pending,
+    className: cn(
+      pending && 'disabled pointer-events-none',
+      className
+    ),
+    children: <BuildIconChildren spinnerClassName={spinnerClassName} pending={pending}>{props.children}</BuildIconChildren>
+  }
+}
+
+function BuildIconChildren ({ pending, children, spinnerClassName }: { pending: boolean, children: ReactNode, spinnerClassName?: string }) {
+  return (
+    <>{pending ? <Spinner className={spinnerClassName} /> : children}</>
+  )
+}
+
 export const TextSubmitButton = withFormStatus(
   withProps(
     TextButton,
     ({ status, disabled, className, ...props }: ComponentProps<typeof TextButton> & { status: FormStatus }) => {
-      return getPendingProps({ pending: status.pending, disabled, className, ...props })
+      return getTextPendingProps({ pending: status.pending, disabled, className, ...props })
     }
   )
 )
@@ -19,11 +46,11 @@ export const TextSubmitButton = withFormStatus(
 export const TextPendingButton = withProps(
   TextButton,
   ({ pending, disabled, className, ...props }: ComponentProps<typeof TextButton> & { pending: boolean }) => {
-    return getPendingProps({ pending, disabled, className, ...props })
+    return getTextPendingProps({ pending, disabled, className, ...props })
   }
 )
 
-function getPendingProps ({ pending, disabled, className, ...props }: ComponentProps<typeof TextButton> & { pending: boolean }) {
+function getTextPendingProps ({ pending, disabled, className, ...props }: ComponentProps<typeof TextButton> & { pending: boolean }) {
   return {
     ...props,
     disabled: disabled ?? pending,
@@ -31,11 +58,11 @@ function getPendingProps ({ pending, disabled, className, ...props }: ComponentP
       pending && 'disabled pointer-events-none dark:text-gray-400',
       className
     ),
-    children: <BuildChildren pending={pending}>{props.children}</BuildChildren>
+    children: <BuildTextChildren pending={pending}>{props.children}</BuildTextChildren>
   }
 }
 
-function BuildChildren ({
+function BuildTextChildren ({
   pending,
   children
 }: {

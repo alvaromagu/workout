@@ -1,5 +1,4 @@
-import { up, down } from '../migrations/003_credentials_table_remove'
-import { db } from '@/commons/infra/db/kysely-pg/db'
+import { up, down } from '../migrations/004_exercise'
 
 const args = process.argv.slice(2)
 
@@ -7,7 +6,7 @@ console.log(args)
 
 if (args.includes('--up')) {
   // Run the up migration
-  up(db)
+  up()
     .then(() => {
       console.log('Migration complete')
       process.exit(0)
@@ -20,7 +19,7 @@ if (args.includes('--up')) {
 
 if (args.includes('--down')) {
   // Run the down migration
-  down(db)
+  down()
     .then(() => {
       console.log('Migration complete')
       process.exit(0)
