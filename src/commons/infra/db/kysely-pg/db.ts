@@ -19,6 +19,7 @@ type Database = NextAuthDatabase & {
   routine: {
     id: string
     name: string
+    user_id: string
   }
   routine_exercise: {
     id: string

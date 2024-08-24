@@ -1,5 +1,5 @@
-import { BaseModel } from "@/commons/domain/models/base-model";
-import { Primitives } from "@/commons/domain/types/to-primitives";
+import { type BaseModel } from '@/commons/domain/models/base-model'
+import { type Primitives } from '@/commons/domain/types/to-primitives'
 
 function validateId (id: unknown) {
   if (typeof id !== 'string') {
@@ -7,7 +7,7 @@ function validateId (id: unknown) {
   }
 }
 
-function validateSteps(targetSteps: unknown) {
+function validateSteps (targetSteps: unknown) {
   if (typeof targetSteps !== 'number') {
     throw new Error('Invalid steps')
   }
@@ -16,7 +16,7 @@ function validateSteps(targetSteps: unknown) {
   }
 }
 
-function validateReps(targetReps: unknown) {
+function validateReps (targetReps: unknown) {
   if (typeof targetReps !== 'number') {
     throw new Error('Invalid reps')
   }

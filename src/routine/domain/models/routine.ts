@@ -1,5 +1,5 @@
-import { BaseModel } from "@/commons/domain/models/base-model";
-import { Primitives } from "@/commons/domain/types/to-primitives";
+import { type BaseModel } from '@/commons/domain/models/base-model'
+import { type Primitives } from '@/commons/domain/types/to-primitives'
 
 function validateId (id: unknown) {
   if (typeof id !== 'string') {
@@ -23,6 +23,7 @@ export class Routine implements BaseModel<Routine> {
   constructor (
     public readonly id: string,
     public readonly name: string,
+    public readonly userId: string
   ) {
     validateId(id)
     validateName(name)
@@ -32,6 +33,7 @@ export class Routine implements BaseModel<Routine> {
     return {
       id: this.id,
       name: this.name,
+      userId: this.userId
     }
   }
 }
