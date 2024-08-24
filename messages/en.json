@@ -2,7 +2,8 @@
   "home-page": {
     "sign-out": "Sign out",
     "scrapped-data": "Scrapped data",
-    "exercises": "Exercises"
+    "exercises": "Exercises",
+    "workouts": "Workouts"
   },
   "sign-in": {
     "sign-in": "Sign in",

@@ -2,7 +2,9 @@
   "home-page": {
     "sign-out": "Cerrar sesión",
     "scrapped-data": "Datos extraídos",
-    "exercises": "Ejercicios"
+    "exercises": "Ejercicios",
+    "workouts": "Rutinas"
+
   },
   "sign-in": {
     "sign-in": "Iniciar sesión",

@@ -4,7 +4,7 @@ import { UserFinder } from './auth/domain/use-cases/user-finder'
 import { UserCreator } from './auth/domain/use-cases/user-creator'
 import { BCrypter } from './commons/infra/encrypt/b-encrypter'
 import { JsonScrapedExerciseRepository } from './exercise/infra/json-scraped-exercise'
-import { KyselyExerciseRepository } from './exercise/infra/data/kysely-exercise-repository'
+import { KyselyExerciseRepository } from './exercise/infra/repositories/kysely-exercise-repository'
 
 const crypter = new BCrypter()
 export const kysely = db
