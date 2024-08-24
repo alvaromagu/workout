@@ -1,9 +1,9 @@
-import { ScrapedExercise } from "@/exercise/domain/types/scraped-exercise"
-import { cn } from "@/utils"
-import Link from "next/link"
-import { RefObject } from "react"
+import { type ScrapedExercise } from '@/exercise/domain/types/scraped-exercise'
+import { cn } from '@/utils'
+import Link from 'next/link'
+import { type RefObject } from 'react'
 
-export function ScrapedExerciseList({
+export function ScrapedExerciseList ({
   scrapedExercises,
   lastItemRef
 }: {

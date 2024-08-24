@@ -28,8 +28,8 @@ export default async function RequiresAuthLayout ({
             </Link>
           </li>
           <li>
-            <Link className='underline transition-colors hover:text-blue-500' href='/workouts'>
-              {t('home-page.workouts')}
+            <Link className='underline transition-colors hover:text-blue-500' href='/routines'>
+              {t('home-page.routines')}
             </Link>
           </li>
         </ul>

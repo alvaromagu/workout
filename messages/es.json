@@ -3,8 +3,7 @@
     "sign-out": "Cerrar sesión",
     "scrapped-data": "Datos extraídos",
     "exercises": "Ejercicios",
-    "workouts": "Rutinas"
-
+    "routines": "Rutinas"
   },
   "sign-in": {
     "sign-in": "Iniciar sesión",
@@ -35,5 +34,12 @@
     "image-placeholder": "URL de la imagen, e.j. https://example.com/squats.jpg",
     "add": "Añadir",
     "update": "Actualizar"
+  },
+  "routines": {
+    "routines": "Rutinas",
+    "new-routine": "Añadir rutina",
+    "name": "Nombre",
+    "name-placeholder": "Nombre de la rutina, e.j. Rutina de pierna",
+    "add": "Añadir"
   }
 }
