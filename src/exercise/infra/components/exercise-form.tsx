@@ -11,12 +11,14 @@ import { createExerciseAction } from '../actions/create-exercise-action'
 import { type Exercise } from '@/exercise/domain/types/exercise'
 import { type Primitives } from '@/commons/domain/types/to-primitives'
 import { updateExerciseAction } from '../actions/update-exercise-action'
+import { useTranslations } from 'next-intl'
 
 export function ExerciseForm ({
   exercise
 }: {
   exercise?: Partial<Primitives<Exercise>>
 }) {
+  const t = useTranslations()
   const id = exercise?.id
   const isEdit = id != null
   const [state, action] = useFormState(
@@ -38,46 +40,46 @@ export function ExerciseForm ({
   return (
     <form className='flex flex-col gap-2' action={action}>
       <Label>
-        Name
+        {t('exercises.name')}
         <Input
           type='text'
           name='name'
-          placeholder='Name, e.g. Squat'
+          placeholder={t('exercises.name-placeholder')}
           defaultValue={exercise?.name}
           required
           maxLength={50}
         />
       </Label>
       <Label>
-        Description
+        {t('exercises.description')}
         <Input
           type='text'
           name='description'
-          placeholder='Description, e.g. Stand with your feet shoulder-width apart'
+          placeholder={t('exercises.description-placeholder')}
           defaultValue={exercise?.description ?? undefined}
           maxLength={255}
         />
       </Label>
       <Label>
-        Muscles
+        {t('exercises.muscles')}
         <Input
           type='text'
           name='muscles'
-          placeholder='Muscles, e.g. Quadriceps. Separate with commas'
+          placeholder={t('exercises.muscles-placeholder')}
           defaultValue={exercise?.muscles ?? undefined}
         />
       </Label>
       <Label>
-        Image
+        {t('exercises.image')}
         <Input
           type='text'
           name='image'
-          placeholder='Image URL, e.g. https://example.com/squat.png'
+          placeholder={t('exercises.image-placeholder')}
           defaultValue={exercise?.image ?? undefined}
         />
       </Label>
       <TextSubmitButton className='mt-4'>
-        {isEdit ? 'Update' : 'Create'}
+        {isEdit ? t('exercises.update') : t('exercises.add')}
       </TextSubmitButton>
     </form>
   )

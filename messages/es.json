@@ -1,7 +1,8 @@
 {
   "home-page": {
-    "hello-world": "¡Hola, Mundo!",
-    "sign-out": "Cerrar sesión"
+    "sign-out": "Cerrar sesión",
+    "scrapped-data": "Datos extraídos",
+    "exercises": "Ejercicios"
   },
   "sign-in": {
     "sign-in": "Iniciar sesión",
@@ -17,5 +18,20 @@
     "password": "Contraseña",
     "name": "Nombre",
     "already-have-account": "¿Ya tienes una cuenta? Iniciar sesión"
+  },
+  "exercises": {
+    "exercises": "Ejercicios",
+    "new-exercise": "Añadir ejercicio",
+    "edit-exercise": "Editar ejercicio",
+    "name": "Nombre",
+    "name-placeholder": "Nombre del ejercicio, e.j. Sentadillas",
+    "description": "Descripción",
+    "description-placeholder": "Descripción del ejercicio, e.j. Situar los pies a la altura de los hombros y bajar hasta que las rodillas formen un ángulo de 90 grados",
+    "muscles": "Músculos",
+    "muscles-placeholder": "Músculos trabajados, e.j. Cuádriceps, glúteos, isquiotibiales. Separar por comas",
+    "image": "Imagen",
+    "image-placeholder": "URL de la imagen, e.j. https://example.com/squats.jpg",
+    "add": "Añadir",
+    "update": "Actualizar"
   }
 }

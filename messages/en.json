@@ -1,7 +1,8 @@
 {
   "home-page": {
-    "hello-world": "Hello, World!",
-    "sign-out": "Sign out"
+    "sign-out": "Sign out",
+    "scrapped-data": "Scrapped data",
+    "exercises": "Exercises"
   },
   "sign-in": {
     "sign-in": "Sign in",
@@ -17,5 +18,20 @@
     "password": "Password",
     "name": "Name",
     "already-have-account": "Already have an account? Sign in"
+  },
+  "exercises": {
+    "exercises": "Exercises",
+    "new-exercise": "Add exercise",
+    "edit-exercise": "Edit exercise",
+    "name": "Name",
+    "name-placeholder": "Exercise name, e.g. Squats",
+    "description": "Description",
+    "description-placeholder": "Exercise description, e.g. Place your feet shoulder-width apart and lower until your knees form a 90-degree angle",
+    "muscles": "Muscles",
+    "muscles-placeholder": "Muscles worked, e.g. Quadriceps, glutes, hamstrings. Separate by commas",
+    "image": "Image",
+    "image-placeholder": "Image URL, e.g. https://example.com/squats.jpg",
+    "add": "Add",
+    "update": "Update"
   }
 }
