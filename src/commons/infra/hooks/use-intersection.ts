@@ -7,7 +7,6 @@ export function useIntersection(
   cb: () => void,
   options: Options = { observe: true, rootMargin: '0px' }
 ) {
-  console.log(options)
   useEffect(() => {
     if (options.observe === false) return
     const observer = new IntersectionObserver(([entry]) => {

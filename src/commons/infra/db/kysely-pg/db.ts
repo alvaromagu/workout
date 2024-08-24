@@ -16,6 +16,17 @@ type Database = NextAuthDatabase & {
     muscles: string | null
     image: string | null
   }
+  routine: {
+    id: string
+    name: string
+  }
+  routine_exercise: {
+    id: string
+    routine_id: string
+    exercise_id: string
+    target_reps: number
+    target_steps: number
+  }
 }
 
 export type KyselyDatabase = typeof db
