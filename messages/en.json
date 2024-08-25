@@ -38,8 +38,10 @@
   "routines": {
     "routines": "Routines",
     "new-routine": "Add routine",
+    "update-routine": "Update routine",
     "name": "Name",
     "name-placeholder": "Routine name, e.g. Leg routine",
-    "add": "Add"
+    "add": "Add",
+    "update": "Update"
   }
 }

@@ -18,7 +18,14 @@ export class KyselyRoutineRepository extends Repository implements RoutineReposi
       .execute()
   }
 
-  async findById (id: string): Promise<Routine | null> {
+  async update (routine: Routine): Promise<void> {
+    await this.db.updateTable('routine')
+      .set(this.toDb(routine))
+      .where('id', '=', routine.id)
+      .execute()
+  }
+
+  async get (id: string): Promise<Routine | null> {
     const routine = await this.db.selectFrom('routine')
       .selectAll()
       .where('id', '=', id)
@@ -32,10 +39,15 @@ export class KyselyRoutineRepository extends Repository implements RoutineReposi
       .execute()
   }
 
-  async paginated (offset: number, limit: number): Promise<SourcePaginated<Routine>> {
+  async paginated ({ offset, limit, userId }: {
+    offset: number
+    limit: number
+    userId: string
+  }): Promise<SourcePaginated<Routine>> {
     const [routines, { total } = { total: 0 }] = await Promise.all([
       this.db.selectFrom('routine')
         .selectAll()
+        .where('user_id', '=', userId)
         .offset(offset)
         .limit(limit)
         .execute(),

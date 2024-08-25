@@ -38,8 +38,10 @@
   "routines": {
     "routines": "Rutinas",
     "new-routine": "Añadir rutina",
+    "update-routine": "Actualizar rutina",
     "name": "Nombre",
     "name-placeholder": "Nombre de la rutina, e.j. Rutina de pierna",
-    "add": "Añadir"
+    "add": "Añadir",
+    "update": "Actualizar"
   }
 }

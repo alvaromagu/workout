@@ -1,19 +1,28 @@
 'use client'
 
+import { type Primitives } from '@/commons/domain/types/to-primitives'
 import { TextSubmitButton } from '@/commons/infra/components/client-button'
 import { Input } from '@/commons/infra/components/input'
 import { Label } from '@/commons/infra/components/label'
+import { type Routine } from '@/routine/domain/models/routine'
 import { useTranslations } from 'next-intl'
-import { createRoutineAction } from '../actions/create-routine-action'
-import toast from 'react-hot-toast'
 import { redirect } from 'next/navigation'
 import { useEffect } from 'react'
 import { useFormState } from 'react-dom'
+import toast from 'react-hot-toast'
+import { createRoutineAction } from '../actions/create-routine-action'
+import { updateRoutineAction } from '../actions/update-routine-action'
 
-export function RoutineForm () {
+export function RoutineForm ({
+  routine
+}: {
+  routine?: Primitives<Routine>
+}) {
   const t = useTranslations()
+  const id = routine?.id
+  const isEdit = id != null
   const [state, action] = useFormState(
-    createRoutineAction,
+    isEdit ? updateRoutineAction.bind(null, id) : createRoutineAction,
     undefined
   )
 
@@ -22,11 +31,11 @@ export function RoutineForm () {
     if (state.type === 'error') toast.error(state.message)
     if (state.type === 'success') {
       toast.success(
-        'Routine created successfully'
+        isEdit ? 'Routine updated successfully' : 'Routine created successfully'
       )
       redirect('/routines')
     }
-  }, [state])
+  }, [state, isEdit])
 
   return (
     <form className='flex flex-col gap-2' action={action}>
@@ -36,12 +45,13 @@ export function RoutineForm () {
           type='text'
           name='name'
           placeholder={t('routines.name-placeholder')}
+          defaultValue={routine?.name}
           required
-          maxLength={50}
+          maxLength={255}
         />
       </Label>
       <TextSubmitButton className='mt-4'>
-        {t('routines.add')}
+        {isEdit ? t('routines.update') : t('routines.add')}
       </TextSubmitButton>
     </form>
   )
