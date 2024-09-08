@@ -15,7 +15,7 @@ export default async function EditPage ({
   return (
     <div className='p-2'>
       <h1 className='text-2xl mb-4'>
-        {t('exercises.edit-exercise')}
+        {t('routines.update-routine')}
       </h1>
       <RoutineForm routine={routine} />
     </div>

@@ -1,28 +1,29 @@
-import { Paginated } from "@/exercise/infra/types/paginated"
-import { useInfiniteQuery, UseInfiniteQueryOptions } from "@tanstack/react-query"
+import { type Paginated } from '@/exercise/infra/types/paginated'
+import { useInfiniteQuery, type UseInfiniteQueryOptions } from '@tanstack/react-query'
 
-
-type Props = {
-  queryKey: UseInfiniteQueryOptions['queryKey'],
-  api: string,
+interface Props {
+  queryKey: UseInfiniteQueryOptions['queryKey']
+  api: string
   limit: number
+  intialPageParam?: string
 }
 
 export function usePagination<T> ({
   api,
   queryKey,
-  limit
+  limit,
+  intialPageParam
 }: Props) {
   const { data, isLoading, isFetching, fetchNextPage } = useInfiniteQuery({
     queryKey,
     staleTime: Infinity,
     gcTime: Infinity,
-    initialPageParam: `${api}?limit=${limit}&offset=0`,
+    initialPageParam: intialPageParam ?? `${api}?limit=${limit}&offset=0`,
     queryFn: async ({
       pageParam
     }) => {
       const res = await fetch(pageParam)
-        .then<Paginated<T>>(res => res.json())
+        .then<Paginated<T>>(async res => await res.json())
       return res
     },
     getNextPageParam: (lastPage) => {

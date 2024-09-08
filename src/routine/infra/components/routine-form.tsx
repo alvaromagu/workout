@@ -12,6 +12,7 @@ import { useFormState } from 'react-dom'
 import toast from 'react-hot-toast'
 import { createRoutineAction } from '../actions/create-routine-action'
 import { updateRoutineAction } from '../actions/update-routine-action'
+import { AddExercisesDialog } from './add-exercises-dialog'
 
 export function RoutineForm ({
   routine
@@ -38,7 +39,7 @@ export function RoutineForm ({
   }, [state, isEdit])
 
   return (
-    <form className='flex flex-col gap-2' action={action}>
+    <form className='flex flex-col gap-2 relative' action={action}>
       <Label>
         {t('routines.name')}
         <Input
@@ -50,9 +51,15 @@ export function RoutineForm ({
           maxLength={255}
         />
       </Label>
-      <TextSubmitButton className='mt-4'>
-        {isEdit ? t('routines.update') : t('routines.add')}
-      </TextSubmitButton>
+      <ul>
+        {/* ExerciseList */}
+      </ul>
+      <footer className='flex flex-col gap-2 sticky bottom-0 z-10 dark:bg-zinc-950 py-2'>
+        <AddExercisesDialog />
+        <TextSubmitButton type='submit' className='dark:bg-zinc-950'>
+          {isEdit ? t('routines.update') : t('routines.add')}
+        </TextSubmitButton>
+      </footer>
     </form>
   )
 }
