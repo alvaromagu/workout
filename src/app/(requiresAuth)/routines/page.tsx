@@ -25,7 +25,7 @@ export default async function RoutinesPage () {
                 </h2>
               </div>
               <Link
-                href={`/routines/edit/${routine.id}`}
+                href={`/routines/${routine.id}/edit`}
                 className='flex items-center justify-center rounded-full p-2 transition-colors dark:hover:bg-zinc-800 dark:border dark:border-zinc-800'
               >
                 <IconEdit size={18} />
