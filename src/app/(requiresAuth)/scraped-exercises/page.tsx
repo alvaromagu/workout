@@ -3,14 +3,14 @@
 import { Spinner } from '@/commons/infra/components/spinner'
 import { useIntersection } from '@/commons/infra/hooks/use-intersection'
 import { usePagination } from '@/commons/infra/hooks/use-pagination'
-import { ScrapedExercise } from '@/exercise/domain/types/scraped-exercise'
+import { type ScrapedExercise } from '@/exercise/domain/types/scraped-exercise'
 import { ScrapedExerciseList } from '@/exercise/infra/components/scraped-exercise-list'
 import { useRef } from 'react'
 
 const API_URL = '/api/exercises/scraped'
-const LIMIT = 1
+const LIMIT = 10
 
-export default function ScrapedExercisesPage() {
+export default function ScrapedExercisesPage () {
   const lastItemRef = useRef<HTMLLIElement>(null)
   const { data, isLoading, isFetching, fetchNextPage } = usePagination<ScrapedExercise>({
     api: API_URL,

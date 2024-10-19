@@ -42,6 +42,7 @@
     "name": "Nombre",
     "name-placeholder": "Nombre de la rutina, e.j. Rutina de pierna",
     "add": "Añadir",
-    "update": "Actualizar"
+    "update": "Actualizar",
+    "add-exercises": "Añadir ejercicios"
   }
 }

@@ -42,6 +42,7 @@
     "name": "Name",
     "name-placeholder": "Routine name, e.g. Leg routine",
     "add": "Add",
-    "update": "Update"
+    "update": "Update",
+    "add-exercises": "Add exercises"
   }
 }

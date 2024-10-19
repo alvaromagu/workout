@@ -50,9 +50,6 @@ export function RoutineForm ({
           maxLength={255}
         />
       </Label>
-      <ul>
-        {/* ExerciseList */}
-      </ul>
       <footer className='flex flex-col gap-2 sticky bottom-0 z-10 dark:bg-zinc-950 py-2'>
         <TextSubmitButton type='submit' className='dark:bg-zinc-950 w-full'>
           {isEdit ? t('routines.update') : t('routines.add')}
