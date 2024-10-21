@@ -9,7 +9,7 @@ export default async function EditPage ({
     id: string
   }
 }) {
-  const routine = await getRoutineAction(params.id)
+  const { routine, routineExercises } = await getRoutineAction(params.id)
   const t = await getTranslations()
 
   return (
@@ -17,7 +17,7 @@ export default async function EditPage ({
       <h1 className='text-2xl mb-4'>
         {t('routines.update-routine')}
       </h1>
-      <RoutineForm routine={routine} />
+      <RoutineForm routine={routine} exercises={routineExercises} />
     </div>
   )
 }

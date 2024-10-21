@@ -12,11 +12,15 @@ import { useFormState } from 'react-dom'
 import toast from 'react-hot-toast'
 import { createRoutineAction } from '../actions/create-routine-action'
 import { updateRoutineAction } from '../actions/update-routine-action'
+import { type RoutineExercisePopulatedPrimitives } from '@/routine/domain/types/routine-exercise-populated'
+import { ExerciseItem } from '@/exercise/infra/components/exercise-item'
 
 export function RoutineForm ({
-  routine
+  routine,
+  exercises
 }: {
   routine?: Primitives<Routine>
+  exercises: RoutineExercisePopulatedPrimitives[]
 }) {
   const t = useTranslations()
   const id = routine?.id
@@ -50,6 +54,13 @@ export function RoutineForm ({
           maxLength={255}
         />
       </Label>
+      <ul className='flex flex-col gap-2'>
+        {exercises.map(({ routineExercise, exercise }) => (
+          <li key={exercise.id} className='flex flex-col dark:bg-zinc-900 rounded'>
+            <ExerciseItem exercise={exercise} />
+          </li>
+        ))}
+      </ul>
       <footer className='flex flex-col gap-2 sticky bottom-0 z-10 dark:bg-zinc-950 py-2'>
         <TextSubmitButton type='submit' className='dark:bg-zinc-950 w-full'>
           {isEdit ? t('routines.update') : t('routines.add')}
