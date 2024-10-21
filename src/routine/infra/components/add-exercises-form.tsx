@@ -1,12 +1,15 @@
 'use client'
 
-import { IconButton } from '@/commons/infra/components/button'
+import { IconButton, TextButton } from '@/commons/infra/components/button'
+import { Input } from '@/commons/infra/components/input'
+import { Label } from '@/commons/infra/components/label'
 import { Spinner } from '@/commons/infra/components/spinner'
+import { useDebounceValue } from '@/commons/infra/hooks/use-debounce'
 import { useIntersection } from '@/commons/infra/hooks/use-intersection'
 import { usePagination } from '@/commons/infra/hooks/use-pagination'
 import { type Exercise } from '@/exercise/domain/types/exercise'
 import { ExerciseItem } from '@/exercise/infra/components/exercise-item'
-import { IconArrowRight } from '@tabler/icons-react'
+import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react'
 import { type RefObject, useRef, useState } from 'react'
 
 type StepState =
@@ -25,10 +28,22 @@ export function AddExerciesForm ({
   }
 
   return (
-    <>
+    <div>
+      <header className='flex justify-between items-center mb-2'>
+        <h2 className='text-xl'>
+          {step.stepName}
+        </h2>
+        {step.stepName !== 'select-exercise' && (
+          <TextButton onClick={() => {
+            setStep({ stepName: 'select-exercise' })
+          }}>
+            Step back <IconArrowLeft />
+          </TextButton>
+        )}
+      </header>
       {step.stepName === 'select-exercise' && <ExerciseSelector onSelectExercise={handleSelectExercise} />}
       {step.stepName === 'routine-config' && <RoutineConfig exercise={step.exercise} />}
-    </>
+    </div>
   )
 }
 
@@ -40,10 +55,13 @@ function ExerciseSelector ({
 }: {
   onSelectExercise: (exercise: Exercise) => void
 }) {
+  const [search, setSearch] = useState('')
+  const debouncedSearch = useDebounceValue(search, 500)
   const lastItemRef = useRef<HTMLLIElement>(null)
   const { data, isLoading, isFetching, fetchNextPage } = usePagination<Exercise>({
     api: API_URL,
-    queryKey: ['exercises'],
+    queryKey: ['exercises', debouncedSearch],
+    intialPageParam: `${API_URL}?limit=${LIMIT}&offset=0&q=${debouncedSearch}`,
     limit: LIMIT
   })
 
@@ -55,7 +73,14 @@ function ExerciseSelector ({
 
   return (
     <>
-      <h2 className='text-xl'>Select an exercise</h2>
+      <search>
+        <Label>
+          Search
+          <Input type='search' placeholder='Search exercises' value={search} onChange={(e) => {
+            setSearch(e.target.value)
+          }} />
+        </Label>
+      </search>
       <div className='flex mt-2 justify-center'>
         {isLoading && <Spinner />}
       </div>
@@ -105,8 +130,20 @@ function RoutineConfig ({
 }) {
   return (
     <>
-      <h2 className='text-xl mb-2'>Configure the exercise</h2>
       <ExerciseItem exercise={exercise} />
+      <form className='flex flex-col gap-2 mt-2'>
+        <Label>
+          Target steps
+          <Input type='number' min={1} required placeholder='Target steps' />
+        </Label>
+        <Label>
+          Target reps
+          <Input type='number' min={1} required placeholder='Target reps' />
+        </Label>
+        <TextButton type='submit' className='mt-2'>
+          Add exercise
+        </TextButton>
+      </form>
     </>
   )
 }

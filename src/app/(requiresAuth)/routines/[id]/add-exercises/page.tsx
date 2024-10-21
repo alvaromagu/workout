@@ -14,7 +14,7 @@ export default async function AddExercisesPage ({
 
   return (
     <div className='p-2'>
-      <h1 className='text-2xl mb-4'>
+      <h1 className='text-2xl mb-2'>
         {t('routines.add-exercises')}
       </h1>
       <AddExerciesForm routineId={routine.id} />
