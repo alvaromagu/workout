@@ -11,6 +11,9 @@ function validateSteps (targetSteps: unknown) {
   if (typeof targetSteps !== 'number') {
     throw new Error('Invalid steps')
   }
+  if (isNaN(targetSteps)) {
+    throw new Error('Invalid steps')
+  }
   if (targetSteps < 1) {
     throw new Error('Steps too low')
   }
@@ -19,6 +22,9 @@ function validateSteps (targetSteps: unknown) {
 function validateReps (targetReps: unknown) {
   if (typeof targetReps !== 'number') {
     throw new Error('Invalid reps')
+  }
+  if (isNaN(targetReps)) {
+    throw new Error('Invalid steps')
   }
   if (targetReps < 1) {
     throw new Error('Reps too low')

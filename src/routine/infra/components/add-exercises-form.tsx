@@ -10,7 +10,11 @@ import { usePagination } from '@/commons/infra/hooks/use-pagination'
 import { type Exercise } from '@/exercise/domain/types/exercise'
 import { ExerciseItem } from '@/exercise/infra/components/exercise-item'
 import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react'
-import { type RefObject, useRef, useState } from 'react'
+import { type RefObject, useEffect, useRef, useState } from 'react'
+import { createRoutineExerciseAction } from '../actions/create-routine-exercise-action'
+import { useFormState } from 'react-dom'
+import { redirect } from 'next/navigation'
+import toast from 'react-hot-toast'
 
 type StepState =
   { stepName: 'select-exercise' }
@@ -37,12 +41,12 @@ export function AddExerciesForm ({
           <TextButton onClick={() => {
             setStep({ stepName: 'select-exercise' })
           }}>
-            Step back <IconArrowLeft />
+            Change exercise <IconArrowLeft />
           </TextButton>
         )}
       </header>
       {step.stepName === 'select-exercise' && <ExerciseSelector onSelectExercise={handleSelectExercise} />}
-      {step.stepName === 'routine-config' && <RoutineConfig exercise={step.exercise} />}
+      {step.stepName === 'routine-config' && <RoutineConfig exercise={step.exercise} routineId={routineId} />}
     </div>
   )
 }
@@ -124,21 +128,37 @@ function SelectableExerciseList ({
 }
 
 function RoutineConfig ({
-  exercise
+  exercise,
+  routineId
 }: {
   exercise: Exercise
+  routineId: string
 }) {
+  const [state, action] = useFormState(
+    createRoutineExerciseAction.bind(null, { routineId, exerciseId: exercise.id }),
+    undefined
+  )
+
+  useEffect(() => {
+    if (state == null) return
+    if (state.type === 'error') toast.error(state.message)
+    if (state.type === 'success') {
+      toast.success('Exercise added to routine successfully')
+      redirect(`/routines/${routineId}/edit`)
+    }
+  }, [state, routineId])
+
   return (
     <>
       <ExerciseItem exercise={exercise} />
-      <form className='flex flex-col gap-2 mt-2'>
+      <form action={action} className='flex flex-col gap-2 mt-2'>
         <Label>
           Target steps
-          <Input type='number' min={1} required placeholder='Target steps' />
+          <Input type='number' min={1} required placeholder='Target steps' name='sets' />
         </Label>
         <Label>
           Target reps
-          <Input type='number' min={1} required placeholder='Target reps' />
+          <Input type='number' min={1} required placeholder='Target reps' name='reps' />
         </Label>
         <TextButton type='submit' className='mt-2'>
           Add exercise
