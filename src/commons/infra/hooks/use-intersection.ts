@@ -1,14 +1,14 @@
-import { RefObject, useEffect } from "react";
+import { type RefObject, useEffect } from 'react'
 
 type Options = IntersectionObserverInit & { observe: boolean }
 
-export function useIntersection(
+export function useIntersection (
   element: RefObject<HTMLElement>,
   cb: () => void,
   options: Options = { observe: true, rootMargin: '0px' }
 ) {
   useEffect(() => {
-    if (options.observe === false) return
+    if (!options.observe) return
     const observer = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) {
         cb()

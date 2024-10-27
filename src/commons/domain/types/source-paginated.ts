@@ -1,4 +1,4 @@
-export type SourcePaginated <T> = {
+export interface SourcePaginated <T> {
   results: T[]
   total: number
 }

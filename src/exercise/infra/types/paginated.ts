@@ -1,4 +1,4 @@
-export type Paginated<T> = {
+export interface Paginated<T> {
   results: T[]
   total: number
   page: number
