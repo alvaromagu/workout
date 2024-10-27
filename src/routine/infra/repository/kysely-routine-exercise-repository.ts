@@ -29,7 +29,7 @@ export class KyselyRoutineExerciseRepository extends Repository implements Routi
 
   async update (routineExercise: RoutineExercise): Promise<void> {
     await this.db.updateTable('routine_exercise')
-      .set(routineExercise.toPrimitives())
+      .set(this.mapToDb(routineExercise))
       .where('id', '=', routineExercise.id)
       .execute()
   }
@@ -38,6 +38,43 @@ export class KyselyRoutineExerciseRepository extends Repository implements Routi
     await this.db.deleteFrom('routine_exercise')
       .where('id', '=', id)
       .execute()
+  }
+
+  async getPopulatedById (id: string): Promise<RoutineExercisePopulated | null> {
+    const [row] = await this.db.selectFrom('routine_exercise')
+      .where('routine_exercise.id', '=', id)
+      .innerJoin('exercise', 'exercise.id', 'routine_exercise.exercise_id')
+      .select([
+        'routine_exercise.id as routine_exercise_id',
+        'routine_exercise.routine_id as routine_id',
+        'routine_exercise.exercise_id as exercise_id',
+        'routine_exercise.target_steps as target_steps',
+        'routine_exercise.target_reps as target_reps',
+        'exercise.name as exercise_name',
+        'exercise.description as exercise_description',
+        'exercise.image as exercise_image',
+        'exercise.muscles as exercise_muscles'
+      ])
+      .execute()
+    if (row == null) {
+      return null
+    }
+    return {
+      routineExercise: new RoutineExercise(
+        row.routine_exercise_id,
+        row.routine_id,
+        row.exercise_id,
+        row.target_steps,
+        row.target_reps
+      ),
+      exercise: new Exercise(
+        row.exercise_id,
+        row.exercise_name,
+        row.exercise_description,
+        row.exercise_muscles,
+        row.exercise_image
+      )
+    }
   }
 
   async getPopulatedByRoutineId (routineId: string): Promise<RoutineExercisePopulated[]> {

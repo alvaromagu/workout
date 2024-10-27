@@ -6,5 +6,6 @@ export interface RoutineExerciseRepository {
   saveBatch: (routineExercises: RoutineExercise[]) => Promise<void>
   update: (routineExercise: RoutineExercise) => Promise<void>
   delete: (id: string) => Promise<void>
+  getPopulatedById: (id: string) => Promise<RoutineExercisePopulated | null>
   getPopulatedByRoutineId: (routineId: string) => Promise<RoutineExercisePopulated[]>
 }

@@ -1,28 +1,27 @@
 'use client'
 
-import { type Primitives } from '@/commons/domain/types/to-primitives'
 import { TextSubmitButton } from '@/commons/infra/components/client-button'
 import { Input } from '@/commons/infra/components/input'
 import { Label } from '@/commons/infra/components/label'
-import { type Routine } from '@/routine/domain/models/routine'
+import { ExerciseItem } from '@/exercise/infra/components/exercise-item'
+import { type RoutineWithExercises } from '@/routine/domain/types/routine-exercise-populated'
+import { IconEdit } from '@tabler/icons-react'
 import { useTranslations } from 'next-intl'
+import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { useEffect } from 'react'
 import { useFormState } from 'react-dom'
 import toast from 'react-hot-toast'
 import { createRoutineAction } from '../actions/create-routine-action'
 import { updateRoutineAction } from '../actions/update-routine-action'
-import { type RoutineExercisePopulatedPrimitives } from '@/routine/domain/types/routine-exercise-populated'
-import { ExerciseItem } from '@/exercise/infra/components/exercise-item'
 
 export function RoutineForm ({
-  routine,
-  exercises
+  routineWithExercises
 }: {
-  routine?: Primitives<Routine>
-  exercises: RoutineExercisePopulatedPrimitives[]
+  routineWithExercises?: RoutineWithExercises
 }) {
   const t = useTranslations()
+  const routine = routineWithExercises?.routine
   const id = routine?.id
   const isEdit = id != null
   const [state, action] = useFormState(
@@ -54,13 +53,37 @@ export function RoutineForm ({
           maxLength={255}
         />
       </Label>
-      <ul className='flex flex-col gap-2'>
-        {exercises.map(({ routineExercise, exercise }) => (
-          <li key={exercise.id} className='flex flex-col dark:bg-zinc-900 rounded'>
-            <ExerciseItem exercise={exercise} />
-          </li>
-        ))}
-      </ul>
+      {
+        routineWithExercises != null && (
+          <>
+            <h3>
+              Routine exercises
+            </h3>
+            <ul className='flex flex-col gap-2 px-2'>
+              {routineWithExercises.exercises.map(({ routineExercise, exercise }) => (
+                <li key={routineExercise.id}>
+                  <ExerciseItem
+                    exercise={exercise}
+                    actions={
+                      <>
+                        <span className='px-2 py-1 rounded border dark:border-zinc-800'>
+                          {routineExercise.targetSteps} x {routineExercise.targetReps}
+                        </span>
+                        <Link
+                          href={`/routines/${routine?.id}/exercises/${routineExercise.id}/edit`}
+                          className='flex items-center justify-center rounded-full p-2 transition-colors dark:hover:bg-zinc-800 dark:border dark:border-zinc-800'
+                        >
+                          <IconEdit size={18} />
+                        </Link>
+                      </>
+                    }
+                  />
+                </li>
+              ))}
+            </ul>
+          </>
+        )
+      }
       <footer className='flex flex-col gap-2 sticky bottom-0 z-10 dark:bg-zinc-950 py-2'>
         <TextSubmitButton type='submit' className='dark:bg-zinc-950 w-full'>
           {isEdit ? t('routines.update') : t('routines.add')}

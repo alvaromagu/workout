@@ -15,19 +15,30 @@ import { createRoutineExerciseAction } from '../actions/create-routine-exercise-
 import { useFormState } from 'react-dom'
 import { redirect } from 'next/navigation'
 import toast from 'react-hot-toast'
+import { type RoutineExercisePopulatedPrimitives } from '@/routine/domain/types/routine-exercise-populated'
+import { type Primitives } from '@/commons/domain/types/to-primitives'
+import { type RoutineExercise } from '@/routine/domain/models/routine-exercise'
+import { updateRoutineExerciseAction } from '../actions/edit-routine-exercise-action'
 
 type StepState =
   { stepName: 'select-exercise' }
-  | { stepName: 'routine-config', exercise: Exercise }
+  | { stepName: 'routine-config', exercise: Primitives<Exercise> }
 
 export function AddExerciesForm ({
-  routineId
+  routineId,
+  routineExercise
 }: {
   routineId: string
+  routineExercise?: RoutineExercisePopulatedPrimitives
 }) {
-  const [step, setStep] = useState<StepState>({ stepName: 'select-exercise' })
+  const [step, setStep] = useState<StepState>(() => {
+    if (routineExercise == null) {
+      return { stepName: 'select-exercise' }
+    }
+    return { stepName: 'routine-config', exercise: routineExercise.exercise }
+  })
 
-  function handleSelectExercise (exercise: Exercise) {
+  function handleSelectExercise (exercise: Primitives<Exercise>) {
     setStep({ stepName: 'routine-config', exercise })
   }
 
@@ -46,7 +57,7 @@ export function AddExerciesForm ({
         )}
       </header>
       {step.stepName === 'select-exercise' && <ExerciseSelector onSelectExercise={handleSelectExercise} />}
-      {step.stepName === 'routine-config' && <RoutineConfig exercise={step.exercise} routineId={routineId} />}
+      {step.stepName === 'routine-config' && <RoutineConfig exercise={step.exercise} routineId={routineId} routineExercise={routineExercise?.routineExercise} />}
     </div>
   )
 }
@@ -57,12 +68,12 @@ const LIMIT = 10
 function ExerciseSelector ({
   onSelectExercise
 }: {
-  onSelectExercise: (exercise: Exercise) => void
+  onSelectExercise: (exercise: Primitives<Exercise>) => void
 }) {
   const [search, setSearch] = useState('')
   const debouncedSearch = useDebounceValue(search, 500)
   const lastItemRef = useRef<HTMLLIElement>(null)
-  const { data, isLoading, isFetching, fetchNextPage } = usePagination<Exercise>({
+  const { data, isLoading, isFetching, fetchNextPage } = usePagination<Primitives<Exercise>>({
     api: API_URL,
     queryKey: ['exercises', debouncedSearch],
     intialPageParam: `${API_URL}?limit=${LIMIT}&offset=0&q=${debouncedSearch}`,
@@ -101,9 +112,9 @@ function SelectableExerciseList ({
   lastItemRef,
   onSelectExercise
 }: {
-  exercises: Exercise[]
+  exercises: Array<Primitives<Exercise>>
   lastItemRef: RefObject<HTMLLIElement>
-  onSelectExercise: (exercise: Exercise) => void
+  onSelectExercise: (exercise: Primitives<Exercise>) => void
 }) {
   return (
     <ul className='flex flex-col gap-2 p-2'>
@@ -129,13 +140,18 @@ function SelectableExerciseList ({
 
 function RoutineConfig ({
   exercise,
-  routineId
+  routineId,
+  routineExercise
 }: {
-  exercise: Exercise
+  exercise: Primitives<Exercise>
   routineId: string
+  routineExercise?: Primitives<RoutineExercise>
 }) {
+  const isEdit = routineExercise != null
   const [state, action] = useFormState(
-    createRoutineExerciseAction.bind(null, { routineId, exerciseId: exercise.id }),
+    isEdit
+      ? updateRoutineExerciseAction.bind(null, { routineId, routineExerciseId: routineExercise.id, exerciseId: exercise.id })
+      : createRoutineExerciseAction.bind(null, { routineId, exerciseId: exercise.id }),
     undefined
   )
 
@@ -143,7 +159,7 @@ function RoutineConfig ({
     if (state == null) return
     if (state.type === 'error') toast.error(state.message)
     if (state.type === 'success') {
-      toast.success('Exercise added to routine successfully')
+      toast.success('Exercise added/updated to routine successfully')
       redirect(`/routines/${routineId}/edit`)
     }
   }, [state, routineId])
@@ -154,14 +170,28 @@ function RoutineConfig ({
       <form action={action} className='flex flex-col gap-2 mt-2'>
         <Label>
           Target steps
-          <Input type='number' min={1} required placeholder='Target steps' name='sets' />
+          <Input
+            type='number'
+            min={1}
+            required
+            placeholder='Target steps'
+            name='sets'
+            defaultValue={routineExercise?.targetSteps}
+          />
         </Label>
         <Label>
           Target reps
-          <Input type='number' min={1} required placeholder='Target reps' name='reps' />
+          <Input
+            type='number'
+            min={1}
+            required
+            placeholder='Target reps'
+            name='reps'
+            defaultValue={routineExercise?.targetReps}
+          />
         </Label>
         <TextButton type='submit' className='mt-2'>
-          Add exercise
+          {isEdit ? 'Update' : 'Add'} exercise
         </TextButton>
       </form>
     </>

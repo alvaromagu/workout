@@ -12,7 +12,7 @@ export default async function RoutineLayout ({
   }
 }) {
   const t = await getTranslations()
-  const routine = await getRoutineAction(params.id)
+  const { routine } = await getRoutineAction(params.id)
 
   return (
     <>

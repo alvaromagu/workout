@@ -9,7 +9,7 @@ export default async function AddExercisesPage ({
     id: string
   }
 }) {
-  const routine = await getRoutineAction(params.id)
+  const { routine } = await getRoutineAction(params.id)
   const t = await getTranslations()
 
   return (
