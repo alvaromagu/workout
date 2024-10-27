@@ -2,6 +2,7 @@
 
 import { type Primitives } from '@/commons/domain/types/to-primitives'
 import { IconButton, TextButton } from '@/commons/infra/components/button'
+import { TextSubmitButton } from '@/commons/infra/components/client-button'
 import { Input } from '@/commons/infra/components/input'
 import { Label } from '@/commons/infra/components/label'
 import { Spinner } from '@/commons/infra/components/spinner'
@@ -23,7 +24,7 @@ type StepState =
   { stepName: 'select-exercise' }
   | { stepName: 'routine-config', exercise: Primitives<Exercise> }
 
-export function AddExerciesForm ({
+export function RoutineExerciseForm ({
   routineId,
   routineExercise
 }: {
@@ -189,9 +190,9 @@ function RoutineConfig ({
             defaultValue={routineExercise?.targetReps}
           />
         </Label>
-        <TextButton type='submit' className='mt-2'>
+        <TextSubmitButton type='submit' className='mt-2'>
           {isEdit ? 'Update' : 'Add'} exercise
-        </TextButton>
+        </TextSubmitButton>
       </form>
     </>
   )
