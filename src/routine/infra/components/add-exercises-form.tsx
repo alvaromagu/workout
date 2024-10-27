@@ -1,5 +1,6 @@
 'use client'
 
+import { type Primitives } from '@/commons/domain/types/to-primitives'
 import { IconButton, TextButton } from '@/commons/infra/components/button'
 import { Input } from '@/commons/infra/components/input'
 import { Label } from '@/commons/infra/components/label'
@@ -9,15 +10,13 @@ import { useIntersection } from '@/commons/infra/hooks/use-intersection'
 import { usePagination } from '@/commons/infra/hooks/use-pagination'
 import { type Exercise } from '@/exercise/domain/types/exercise'
 import { ExerciseItem } from '@/exercise/infra/components/exercise-item'
-import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react'
-import { type RefObject, useEffect, useRef, useState } from 'react'
-import { createRoutineExerciseAction } from '../actions/create-routine-exercise-action'
-import { useFormState } from 'react-dom'
-import { redirect } from 'next/navigation'
-import toast from 'react-hot-toast'
-import { type RoutineExercisePopulatedPrimitives } from '@/routine/domain/types/routine-exercise-populated'
-import { type Primitives } from '@/commons/domain/types/to-primitives'
 import { type RoutineExercise } from '@/routine/domain/models/routine-exercise'
+import { type RoutineExercisePopulatedPrimitives } from '@/routine/domain/types/routine-exercise-populated'
+import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react'
+import { redirect } from 'next/navigation'
+import { type RefObject, useRef, useState } from 'react'
+import toast from 'react-hot-toast'
+import { createRoutineExerciseAction } from '../actions/create-routine-exercise-action'
 import { updateRoutineExerciseAction } from '../actions/edit-routine-exercise-action'
 
 type StepState =
@@ -148,26 +147,26 @@ function RoutineConfig ({
   routineExercise?: Primitives<RoutineExercise>
 }) {
   const isEdit = routineExercise != null
-  const [state, action] = useFormState(
-    isEdit
-      ? updateRoutineExerciseAction.bind(null, { routineId, routineExerciseId: routineExercise.id, exerciseId: exercise.id })
-      : createRoutineExerciseAction.bind(null, { routineId, exerciseId: exercise.id }),
-    undefined
-  )
-
-  useEffect(() => {
-    if (state == null) return
-    if (state.type === 'error') toast.error(state.message)
-    if (state.type === 'success') {
-      toast.success('Exercise added/updated to routine successfully')
-      redirect(`/routines/${routineId}/edit`)
-    }
-  }, [state, routineId])
 
   return (
     <>
       <ExerciseItem exercise={exercise} />
-      <form action={action} className='flex flex-col gap-2 mt-2'>
+      <form action={async (formData) => {
+        try {
+          const state = isEdit
+            ? await updateRoutineExerciseAction({ routineId, routineExerciseId: routineExercise.id, exerciseId: exercise.id }, undefined, formData)
+            : await createRoutineExerciseAction({ routineId, exerciseId: exercise.id }, undefined, formData)
+          if (state?.type === 'error') {
+            toast.error(state.message)
+            return
+          }
+          toast.success('Exercise added/updated to routine successfully')
+        } catch (err) {
+          toast.error('Unexpected error occurred')
+          return
+        }
+        redirect(`/routines/${routineId}/edit`)
+      }} className='flex flex-col gap-2 mt-2'>
         <Label>
           Target steps
           <Input
