@@ -13,12 +13,15 @@ export async function updateRoutineExerciseAction (
   formData: FormData
 ): Promise<UpdateCreateExerciseActionState> {
   const formObj = Object.fromEntries(formData)
+  console.log(formObj)
   const routineExercise = new RoutineExercise(
     routineExerciseId,
     routineId,
     exerciseId,
-    Number(formObj.sets),
-    Number(formObj.reps)
+    formObj.steps != null ? Number(formObj.steps) : null,
+    formObj.reps != null ? Number(formObj.reps) : null,
+    formObj.time != null ? 'time' : 'steps-reps',
+    formObj.time != null ? String(formObj.time) : null
   )
   try {
     await routineExerciseRepo.update(routineExercise)

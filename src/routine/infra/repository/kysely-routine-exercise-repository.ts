@@ -11,7 +11,9 @@ export class KyselyRoutineExerciseRepository extends Repository implements Routi
       routine_id: routineExercise.routineId,
       exercise_id: routineExercise.exerciseId,
       target_steps: routineExercise.targetSteps,
-      target_reps: routineExercise.targetReps
+      target_reps: routineExercise.targetReps,
+      type: routineExercise.type,
+      target_time: routineExercise.targetTime
     }
   }
 
@@ -53,7 +55,9 @@ export class KyselyRoutineExerciseRepository extends Repository implements Routi
         'exercise.name as exercise_name',
         'exercise.description as exercise_description',
         'exercise.image as exercise_image',
-        'exercise.muscles as exercise_muscles'
+        'exercise.muscles as exercise_muscles',
+        'routine_exercise.type as type',
+        'routine_exercise.target_time as target_time'
       ])
       .execute()
     if (row == null) {
@@ -65,7 +69,9 @@ export class KyselyRoutineExerciseRepository extends Repository implements Routi
         row.routine_id,
         row.exercise_id,
         row.target_steps,
-        row.target_reps
+        row.target_reps,
+        row.type,
+        row.target_time
       ),
       exercise: new Exercise(
         row.exercise_id,
@@ -90,7 +96,9 @@ export class KyselyRoutineExerciseRepository extends Repository implements Routi
         'exercise.name as exercise_name',
         'exercise.description as exercise_description',
         'exercise.image as exercise_image',
-        'exercise.muscles as exercise_muscles'
+        'exercise.muscles as exercise_muscles',
+        'routine_exercise.type as type',
+        'routine_exercise.target_time as target_time'
       ])
       .execute()
     return rows.map(row => {
@@ -100,7 +108,9 @@ export class KyselyRoutineExerciseRepository extends Repository implements Routi
           row.routine_id,
           row.exercise_id,
           row.target_steps,
-          row.target_reps
+          row.target_reps,
+          row.type,
+          row.target_time
         ),
         exercise: new Exercise(
           row.exercise_id,

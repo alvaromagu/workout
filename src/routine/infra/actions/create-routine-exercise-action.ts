@@ -17,8 +17,10 @@ export async function createRoutineExerciseAction (
     crypto.randomUUID(),
     routineId,
     exerciseId,
-    Number(formObj.sets),
-    Number(formObj.reps)
+    Number(formObj.steps),
+    Number(formObj.reps),
+    formObj.time == null ? 'steps-reps' : 'time',
+    String(formObj.time)
   )
   try {
     await routineExerciseRepo.save(routineExercise)

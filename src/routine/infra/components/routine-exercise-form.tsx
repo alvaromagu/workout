@@ -18,7 +18,8 @@ import { redirect } from 'next/navigation'
 import { type RefObject, useRef, useState } from 'react'
 import toast from 'react-hot-toast'
 import { createRoutineExerciseAction } from '../actions/create-routine-exercise-action'
-import { updateRoutineExerciseAction } from '../actions/edit-routine-exercise-action'
+import { updateRoutineExerciseAction } from '../actions/update-routine-exercise-action'
+import clsx from 'clsx'
 
 type StepState =
   { stepName: 'select-exercise' }
@@ -168,32 +169,103 @@ function RoutineConfig ({
         }
         redirect(`/routines/${routineId}/edit`)
       }} className='flex flex-col gap-2 mt-2'>
-        <Label>
-          Target steps
-          <Input
-            type='number'
-            min={1}
-            required
-            placeholder='Target steps'
-            name='sets'
-            defaultValue={routineExercise?.targetSteps}
-          />
-        </Label>
-        <Label>
-          Target reps
-          <Input
-            type='number'
-            min={1}
-            required
-            placeholder='Target reps'
-            name='reps'
-            defaultValue={routineExercise?.targetReps}
-          />
-        </Label>
+        <RoutineExerciseInputs routineExercise={routineExercise} />
         <TextSubmitButton type='submit' className='mt-2'>
           {isEdit ? 'Update' : 'Add'} exercise
         </TextSubmitButton>
       </form>
     </>
+  )
+}
+
+type ExerciseType = 'steps-reps' | 'time'
+
+export function RoutineExerciseInputs ({
+  routineExercise
+}: {
+  routineExercise?: Primitives<RoutineExercise>
+}) {
+  const [exerciseType, setExerciseType] = useState<ExerciseType>(routineExercise?.type ?? 'steps-reps')
+  const selectedClass = 'border dark:border-blue-400'
+  return (
+    <div className='flex flex-col mt-2'>
+      <div className='flex justify-center gap-2'>
+        <TextButton
+          className={clsx(exerciseType === 'steps-reps' && selectedClass)}
+          type='button'
+          onClick={() => { setExerciseType('steps-reps') }}
+        >
+          Set / Reps
+        </TextButton>
+        <TextButton
+          className={clsx(exerciseType === 'time' && selectedClass)}
+          type='button'
+          onClick={() => { setExerciseType('time') }}
+        >
+          Time
+        </TextButton>
+      </div>
+      {exerciseType === 'steps-reps' && <StepsRepsInputs defaultValues={{
+        steps: routineExercise?.targetSteps,
+        reps: routineExercise?.targetReps
+      }} />}
+      {exerciseType === 'time' && <TimeInputs defaultValues={{
+        time: routineExercise?.targetTime
+      }} />}
+    </div>
+  )
+}
+
+export function StepsRepsInputs ({
+  defaultValues
+}: {
+  defaultValues: { steps?: number | null, reps?: number | null }
+}) {
+  console.log(defaultValues)
+  return (
+    <>
+      <Label>
+        Steps
+        <Input
+          type='number'
+          min={1}
+          required
+          placeholder='Steps'
+          name='steps'
+          defaultValue={defaultValues?.steps ?? undefined}
+        />
+      </Label>
+      <Label>
+        Reps
+        <Input
+          type='number'
+          min={1}
+          required
+          placeholder='Reps'
+          name='reps'
+          defaultValue={defaultValues?.reps ?? undefined}
+        />
+      </Label>
+    </>
+  )
+}
+
+export function TimeInputs ({
+  defaultValues
+}: {
+  defaultValues: { time?: string | null }
+}) {
+  return (
+    <Label>
+      Time (hh:mm:ss)
+      <Input
+        type='time'
+        required
+        name='time'
+        step={1}
+        min='00:00:01'
+        defaultValue={defaultValues?.time ?? '00:00:00'}
+      />
+    </Label>
   )
 }

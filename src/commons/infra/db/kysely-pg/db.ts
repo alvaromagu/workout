@@ -25,8 +25,10 @@ type Database = NextAuthDatabase & {
     id: string
     routine_id: string
     exercise_id: string
-    target_reps: number
-    target_steps: number
+    target_reps: number | null
+    target_steps: number | null
+    type: 'steps-reps' | 'time'
+    target_time: string | null
   }
 }
 
