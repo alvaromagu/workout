@@ -9,17 +9,18 @@ export function useIntersection (
 ) {
   useEffect(() => {
     if (!options.observe) return
+    const current = element.current
     const observer = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) {
         cb()
       }
     }, options)
-    if (element.current) {
-      observer.observe(element.current)
+    if (current != null) {
+      observer.observe(current)
     }
     return () => {
-      if (element.current) {
-        observer.unobserve(element.current)
+      if (current != null) {
+        observer.unobserve(current)
       }
     }
   }, [element, cb, options])
