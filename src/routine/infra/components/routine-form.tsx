@@ -14,6 +14,7 @@ import { useFormState } from 'react-dom'
 import toast from 'react-hot-toast'
 import { createRoutineAction } from '../actions/create-routine-action'
 import { updateRoutineAction } from '../actions/update-routine-action'
+import { DeleteRoutineExerciseButton } from './delete-routine-exercise-form'
 
 export function RoutineForm ({
   routineWithExercises
@@ -75,6 +76,7 @@ export function RoutineForm ({
                         >
                           <IconEdit size={18} />
                         </Link>
+                        <DeleteRoutineExerciseButton routineExerciseId={routineExercise.id} />
                       </>
                     }
                   />
