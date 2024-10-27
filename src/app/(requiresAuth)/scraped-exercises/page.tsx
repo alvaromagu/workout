@@ -1,76 +1,38 @@
-import { scrapedExerciseRepo } from '@/server-container'
-import { cn } from '@/utils'
-import Link from 'next/link'
+'use client'
 
-export default async function ScrapedExercisesPage () {
-  const json = await scrapedExerciseRepo.getScrapedExercises()
+import { Spinner } from '@/commons/infra/components/spinner'
+import { useIntersection } from '@/commons/infra/hooks/use-intersection'
+import { usePagination } from '@/commons/infra/hooks/use-pagination'
+import { type ScrapedExercise } from '@/exercise/domain/types/scraped-exercise'
+import { ScrapedExerciseList } from '@/exercise/infra/components/scraped-exercise-list'
+import { useRef } from 'react'
+
+const API_URL = '/api/exercises/scraped'
+const LIMIT = 10
+
+export default function ScrapedExercisesPage () {
+  const lastItemRef = useRef<HTMLLIElement>(null)
+  const { data, isLoading, isFetching, fetchNextPage } = usePagination<ScrapedExercise>({
+    api: API_URL,
+    queryKey: ['scraped-exercises'],
+    limit: LIMIT
+  })
+
+  useIntersection(
+    lastItemRef,
+    fetchNextPage,
+    { observe: !isFetching }
+  )
 
   return (
-    <ul className='flex flex-col gap-2 p-2'>
-      {json.map(baseExercise => {
-        const { name, description, muscles, images, videos } = baseExercise
-        const searchParams = new URLSearchParams({
-          name: name ?? '',
-          description: description ?? '',
-          muscles: muscles.map(muscle => muscle.name).join(', ') ?? '',
-          image: images[0]?.src ?? ''
-        })
-
-        return (
-          <li key={baseExercise.id}>
-            <article>
-              <Link
-                href={'/exercises/from-scrap?' + searchParams.toString()}
-                className='block w-full p-2 shadow dark:bg-zinc-900 dark:hover:bg-zinc-800 transition-colors overflow-hidden rounded'
-              >
-                <h2>{name}</h2>
-                <div className={cn(
-                  'text-xs'
-                )} dangerouslySetInnerHTML={{ __html: description }} />
-                {muscles.length > 0 && (
-                  <h3 className='mt-4'>Muscles</h3>
-                )}
-                <ul className='flex flex-wrap gap-2'>
-                  {muscles.map(muscle => {
-                    return (
-                      <li key={muscle.id} className='lowercase py-1 px-3 rounded-xl dark:bg-zinc-800 text-sm'>
-                        <h4>{muscle.name}</h4>
-                      </li>
-                    )
-                  })}
-                </ul>
-                {images.length > 0 && (
-                  <h3 className='mt-4'>Images</h3>
-                )}
-                <ul className='flex flex-wrap gap-2'>
-                  {images.map(image => {
-                    return (
-                      <li key={image.id}>
-                        <img src={image.src} alt={name} className='w-auto max-w-24 object-cover rounded' />
-                      </li>
-                    )
-                  })}
-                </ul>
-                {videos.length > 0 && (
-                  <h3 className='mt-4'>Videos</h3>
-                )}
-                <ul className='flex flex-wrap gap-2'>
-                  {videos.map(video => {
-                    return (
-                      <li key={video.id}>
-                        <video
-                          src={video.src}
-                          controls
-                          className='w-full aspect-video object-cover rounded' />
-                      </li>
-                    )
-                  })}
-                </ul>
-              </Link>
-            </article>
-          </li>
-        )
-      })}
-    </ul>
+    <>
+      <div className='flex mt-2 justify-center'>
+        {isLoading && <Spinner />}
+      </div>
+      <ScrapedExerciseList lastItemRef={lastItemRef} scrapedExercises={data ?? []} />
+      <div className='flex mt-2 justify-center'>
+        {isFetching && !isLoading && <Spinner className='mt-2' />}
+      </div>
+    </>
   )
 }

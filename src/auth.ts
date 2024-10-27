@@ -7,5 +7,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   pages: { signIn: '/sign-in' },
   adapter: KyselyAdapter(kysely as unknown as KyselyAuth<Database>),
   session: { strategy: 'jwt' },
+  callbacks: {
+    session: async ({ session, token }) => {
+      return {
+        ...session,
+        userId: token?.sub
+      }
+    }
+  },
   ...authConfig
 })

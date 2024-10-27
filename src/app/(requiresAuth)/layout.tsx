@@ -1,6 +1,7 @@
 import { authThr } from '@/auth/infra/actions/auth-thr'
 import { ClientSignOut } from '@/auth/infra/components/client-sign-out'
 import { type Session } from 'next-auth'
+import { getTranslations } from 'next-intl/server'
 import Link from 'next/link'
 
 export default async function RequiresAuthLayout ({
@@ -8,11 +9,31 @@ export default async function RequiresAuthLayout ({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const t = await getTranslations()
   const session = await authThr()
 
   return (
     <>
       <Header session={session} />
+      <nav>
+        <ul className='flex gap-2 justify-center'>
+          <li>
+            <Link className='underline transition-colors hover:text-blue-500' href='/scraped-exercises'>
+              {t('home-page.scrapped-data')}
+            </Link>
+          </li>
+          <li>
+            <Link className='underline transition-colors hover:text-blue-500' href='/exercises'>
+              {t('home-page.exercises')}
+            </Link>
+          </li>
+          <li>
+            <Link className='underline transition-colors hover:text-blue-500' href='/routines'>
+              {t('home-page.routines')}
+            </Link>
+          </li>
+        </ul>
+      </nav>
       <main>
         {children}
       </main>

@@ -3,7 +3,7 @@
 import { Exercise } from '@/exercise/domain/types/exercise'
 import { exerciseRepo } from '@/server-container'
 import { revalidateTag } from 'next/cache'
-import { type UpdateCreateExerciseActionState } from '../types/update-create-action-state'
+import { type UpdateCreateExerciseActionState } from '../../../commons/infra/types/update-create-action-state'
 
 export async function createExerciseAction (_: UpdateCreateExerciseActionState, formData: FormData): Promise<UpdateCreateExerciseActionState> {
   const formObj = Object.fromEntries(formData)

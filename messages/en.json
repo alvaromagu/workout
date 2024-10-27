@@ -2,7 +2,8 @@
   "home-page": {
     "sign-out": "Sign out",
     "scrapped-data": "Scrapped data",
-    "exercises": "Exercises"
+    "exercises": "Exercises",
+    "routines": "Workouts"
   },
   "sign-in": {
     "sign-in": "Sign in",
@@ -33,5 +34,15 @@
     "image-placeholder": "Image URL, e.g. https://example.com/squats.jpg",
     "add": "Add",
     "update": "Update"
+  },
+  "routines": {
+    "routines": "Routines",
+    "new-routine": "Add routine",
+    "update-routine": "Update routine",
+    "name": "Name",
+    "name-placeholder": "Routine name, e.g. Leg routine",
+    "add": "Add",
+    "update": "Update",
+    "add-exercises": "Add exercises"
   }
 }

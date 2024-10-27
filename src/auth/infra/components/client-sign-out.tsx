@@ -14,7 +14,10 @@ export function ClientSignOut () {
     <form onClick={async (e) => {
       e.preventDefault()
       setPending(true)
-      await signOut()
+      await signOut({
+        redirect: true,
+        callbackUrl: '/sign-in'
+      })
         .finally(() => {
           setPending(false)
         })

@@ -3,11 +3,20 @@ import { type ScrapedExerciseRepository } from '../domain/repositories/scraped-e
 import { type ScrapedExercise } from '../domain/types/scraped-exercise'
 
 export class JsonScrapedExerciseRepository implements ScrapedExerciseRepository {
-  async getScrapedExercise (id: number): Promise<ScrapedExercise | null> {
-    return await scrapedExercises.then((scrapedExercise) => scrapedExercise.find((exercise) => exercise.id === id) ?? null)
+  async count (): Promise<number> {
+    return await scrapedExercises.then((scrapedExercises) => scrapedExercises.length)
   }
 
-  async getScrapedExercises (): Promise<ScrapedExercise[]> {
-    return await scrapedExercises
+  async getScrapedExercises ({
+    limit,
+    offset
+  }: {
+    limit: number
+    offset: number
+  } = {
+    limit: 20,
+    offset: 0
+  }): Promise<ScrapedExercise[]> {
+    return await scrapedExercises.then((scrapedExercises) => scrapedExercises.slice(offset, offset + limit))
   }
 }

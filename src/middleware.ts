@@ -1,7 +1,7 @@
 import NextAuth from 'next-auth'
 import { authConfig } from './auth-config'
 
-const authPathsRegex = /^(\/|\/exercises?.+|\/scraped-exercises)$/
+const authPathsRegex = /^(\/|\/exercises?.+|\/scraped-exercises|\/api\/exercises\/scraped?.+)$/
 
 const { auth } = NextAuth(authConfig)
 export default auth(async function middleware (req) {
